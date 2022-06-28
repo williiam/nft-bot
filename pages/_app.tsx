@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
 // component
-import NavBar from '../components/Navbar/Navbar'
+import NavBar from '../components/main/Navbar'
 
 // redux
 import { wrapper } from '../shared/store/store'

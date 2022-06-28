@@ -1,15 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Web3Button, Web3Address } from '..'
+import { Web3Button, Web3Address } from '../..'
 
 // common
-import { getToggleTheme } from '../../shared/common/theme'
+import { getToggleTheme } from '../../../shared/common/theme'
 
 import React, { useEffect } from 'react'
-
-// contexxt (即將被Redux取代)
-import { useWeb3Context } from '../../shared/context'
 
 // theme
 import { AiFillHome } from 'react-icons/ai'
@@ -33,6 +30,14 @@ import {
 
 // router
 import { useRouter } from 'next/router'
+
+// redux
+import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
+import { switchToHome,switchToWhale,switchToTrace,switchToWallet } from '../../../shared/store/features/section/actions'
+
+// component
+import Menu from './menu'
+import DropdownComponent from './dropdown'
 
 export const NavItem = ({ children }) => {
   return (
@@ -84,7 +89,6 @@ const DropDown = () => {
   const { theme, setTheme } = useNextTheme()
   const themeSetting = useTheme()
   const nowTheme = themeSetting.theme
-  const { address } = useWeb3Context()
 
   const toggleTheme = () => {
     const newThemeStr = getToggleTheme(theme)
@@ -101,6 +105,8 @@ const DropDown = () => {
     }
     return
   }
+
+  const address="test"
   return (
     <Dropdown placement="bottom-right">
       <Dropdown.Trigger>
@@ -161,9 +167,18 @@ const DropDown = () => {
   )
 }
 
+const sections = [
+  {
+
+  }
+]
+
 const NavBar = () => {
-  const { theme, setTheme } = useNextTheme()
   const { isDark, type } = useTheme()
+  const dispatch = useAppDispatch();
+  const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
+  const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
+  // const { provider, web3Provider, address, network } = state
   const router = useRouter()
 
   return (
@@ -217,7 +232,8 @@ const NavBar = () => {
               css={{ flexGrow: '2' }}
               onClick={(e) => {
                 e.preventDefault()
-                router.push('/')
+                dispatch(switchToHome())
+                // router.push('/')
               }}
             >
               <AiFillHome size="1.8rem" />
@@ -225,11 +241,11 @@ const NavBar = () => {
           </NavItem>
         </Grid>
         <Grid xs={10} sm={8} md={9}>
-          <NavMenu />
+          <Menu />
         </Grid>
         <Grid xs={12} sm={2}>
           <NavItem>
-            <DropDown />
+            <DropdownComponent />
           </NavItem>
         </Grid>
       </Grid.Container>

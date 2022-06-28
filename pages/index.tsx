@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Web3Button, Web3Address } from '../components'
 
 // component
-import NavBar from '../components/Navbar/Navbar'
+import NavBar from '../components/main/Navbar'
 
 // common
 import { getToggleTheme } from '../shared/common/theme'
@@ -154,8 +154,6 @@ const LoginPanel = () => {
 const About: NextPage = () => {
   const { setTheme } = useNextTheme()
   const { theme, isDark, type } = useTheme()
-
-  // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
 
   return (
     <>
