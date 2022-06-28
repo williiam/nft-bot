@@ -11,8 +11,15 @@ import { toast } from 'react-toastify'
 import API from '../../../common/api'
 
 // actions
-import { setWeb3UserState,resetWeb3UserState } from './index'
+import { setWeb3UserState,resetWeb3UserState,setIsLoggedIn } from './index'
 
+/**
+ * 給定provider，取得web3UserState
+ * 並登入到NFT.bot，
+ * 登入成功後，將web3UserState存入redux
+ * 登入失敗則不做事
+ * @param {provider} provider - the provider returned from web3Modal
+ */
 export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) => {
   const { provider } = payload
   const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
@@ -43,7 +50,7 @@ export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) =
     // dispatch登入成功(pageFlow)
     // thunkAPI.dispatch(setPageFlow("home"))
     thunkAPI.dispatch(setWeb3UserState({web3UserData}))
-    
+    thunkAPI.dispatch(setIsLoggedIn({isLoggedIn:true}))
   }
 
   return web3UserData;

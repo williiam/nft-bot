@@ -20,6 +20,7 @@ export type Web3UserData = {
 
 export type Web3UserState = {
   state: Web3UserData;
+  isLoggedIn: boolean;
   pending: boolean;
   error: boolean;
 };
@@ -34,6 +35,7 @@ const initialState: Web3UserState = {
     connect: null,
     disconnect: null,
   },
+  isLoggedIn: false,
   pending: false,
   error: false,
 };
@@ -45,6 +47,11 @@ export const web3UserSlice = createSlice({
     setWeb3UserState: (state,action:PayloadAction<Web3UserData>) => {
       console.log('action :', action);
       state.state=action.payload.web3UserData;
+      // return Object.assign(state.data, action.payload)
+    },
+    setIsLoggedIn: (state,action:PayloadAction<boolean>) => {
+      console.log('action :', action);
+      state.isLoggedIn=action.payload.isLoggedIn;
       // return Object.assign(state.data, action.payload)
     },
     resetWeb3UserState: () => initialState
@@ -70,4 +77,4 @@ export const web3UserSlice = createSlice({
 });
 
 export default web3UserSlice.reducer;
-export const { setWeb3UserState, resetWeb3UserState } = web3UserSlice.actions
+export const { setWeb3UserState, resetWeb3UserState,setIsLoggedIn } = web3UserSlice.actions
