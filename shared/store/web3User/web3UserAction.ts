@@ -34,8 +34,9 @@ const login = async (signer) => {
  * 將web3Provider存到redux裡
  * @param { provider } payload - Web3ProviderState
  */
-export const setWeb3UserState = async (payload) => async (dispatch) => {
+export const setWeb3UserState = (payload) => async (dispatch,getState) => {
   try {
+    console.log('payload :', payload);
     const { provider } = payload; 
     const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
     const signer = await web3Provider.getSigner()
@@ -62,6 +63,7 @@ export const setWeb3UserState = async (payload) => async (dispatch) => {
       payload: web3State
     } as web3ProviderAction);
   } catch (error) {
+  console.log('error :', error);
     
     dispatch({
       type: "RESET_WEB3_STATE"

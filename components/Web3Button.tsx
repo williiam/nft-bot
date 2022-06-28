@@ -19,12 +19,13 @@ interface ConnectProps {
   connect: (() => Promise<void>) | null
 }
 
-export const CardButton = ({children}) => {
+export const CardButton = ({ children }) => {
   return (
     <Card
       isPressable
       isHoverable
       variant="bordered"
+      as="button"
       css={{
         h: '$22',
         justyContent: 'center',
@@ -32,8 +33,9 @@ export const CardButton = ({children}) => {
         backgroundColor: '$info-400',
         backgroundImage: 'linear-gradient(#e66465, #9198e5);',
         '&:hover': {
-          backgroundImage: 'linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)',
-          backgroundColor: '$info-300'
+          backgroundImage:
+            'linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)',
+          backgroundColor: '$info-300',
         },
       }}
     >
@@ -54,9 +56,39 @@ export const CardButton = ({children}) => {
 
 const ConnectButton = ({ connect }: ConnectProps) => {
   return connect ? (
-    <CardButton color="gradient" ghost onClick={connect}>
-      Connect
-    </CardButton>
+    <Button
+      color="gradient"
+      ghost
+      css={{
+        h: '$space$20',
+        justyContent: 'center',
+        color: '$primary-100',
+        backgroundColor: '$info-400',
+        backgroundImage: 'linear-gradient(#e66465, #9198e5);',
+        '&:hover': {
+          backgroundImage:
+            'linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)',
+          backgroundColor: '$info-300',
+        },
+      }}
+      onClick={() => {
+        console.log('clickded')
+        connect()
+      }}
+    >
+      <Text
+        h1
+        weight="bold"
+        css={{
+          us: 'all',
+          ta: 'left',
+          fs: '$space$14',
+          color: '$titleColor',
+        }}
+      >
+        登入
+      </Text>
+    </Button>
   ) : (
     <CardButton>Loading...</CardButton>
   )
@@ -76,7 +108,11 @@ const DisconnectButton = ({ disconnect }: DisconnectProps) => {
 
 export function Web3Button() {
   const { web3Provider, connect, disconnect } = useWeb3UserRedux()
-  console.log('{ web3Provider, connect, disconnect } :', { web3Provider, connect, disconnect });
+  console.log('{ web3Provider, connect, disconnect } :', {
+    web3Provider,
+    connect,
+    disconnect,
+  })
 
   return web3Provider ? (
     <DisconnectButton disconnect={disconnect} />

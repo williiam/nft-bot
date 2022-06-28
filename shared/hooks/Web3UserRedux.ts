@@ -18,6 +18,30 @@ import { useTheme } from '@nextui-org/react'
 // router
 import { useRouter } from 'next/router'
 
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider, // required
+    options: {
+      infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
+    },
+  }
+}
+
+let web3Modal: Web3Modal | null
+if (typeof window !== 'undefined') {
+  web3Modal = new Web3Modal({
+    network: 'mainnet', // optional
+    // cacheProvider: true,
+    providerOptions, // required
+    theme: {
+      background: "rgb(39, 49, 56)",
+      main: "rgb(199, 199, 199)",
+      secondary: "rgb(136, 136, 136)",
+      border: "rgba(195, 195, 195, 0.14)",
+      hover: "rgb(16, 26, 32)"
+    }
+  })
+}
 
 export const useWeb3UserRedux = () => {
   const web3UserState:Web3UserState = useSelector((state: any) => state.web3User)
@@ -26,44 +50,21 @@ export const useWeb3UserRedux = () => {
   const dispatchReduxAction = useDispatch()
   const { isDark } = useTheme()
   const router = useRouter()
-  const providerOptions = {
-    walletconnect: {
-      package: WalletConnectProvider, // required
-      options: {
-        infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
-      },
-    }
-  }
-  
-  let web3Modal: Web3Modal | null
-  if (typeof window !== 'undefined') {
-    web3Modal = new Web3Modal({
-      network: 'mainnet', // optional
-      cacheProvider: true,
-      providerOptions, // required
-      theme: {
-        background: "rgb(39, 49, 56)",
-        main: "rgb(199, 199, 199)",
-        secondary: "rgb(136, 136, 136)",
-        border: "rgba(195, 195, 195, 0.14)",
-        hover: "rgb(16, 26, 32)"
-      }
-    })
-  }
+
   
   const connect = useCallback(async () => {
     debugger;
     if (web3Modal) {
       // return;
       try {
-        isDark ? await web3Modal.updateTheme("dark") : await web3Modal.updateTheme("light")
+        // isDark ? await web3Modal.updateTheme("dark") : await web3Modal.updateTheme("light")
         const newProvider = await web3Modal.connect() //metamask , coinbase ...
         console.log('newProvider :', newProvider);
         debugger
         toast.success('Connected to Web3')
         await dispatchReduxAction(setWeb3UserState({
           type: 'SET_WEB3_STATE',
-          payload: provider
+          payload: newProvider
         } as web3UserAction))
         router.push('/');
       } catch (e) {
@@ -96,11 +97,11 @@ export const useWeb3UserRedux = () => {
   }, [])
 
   //  Auto connect to the cached provider
-  useEffect(() => {
-    if (web3Modal && web3Modal.cachedProvider) {
-      connect()
-    }
-  }, [connect])
+  // useEffect(() => {
+  //   if (web3Modal && web3Modal.cachedProvider) {
+  //     connect()
+  //   }
+  // }, [connect])
 
   // EIP-1193 events
   useEffect(() => {
