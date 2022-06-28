@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import NavBar from '../components/Navbar/Navbar'
 
 // redux
-import { wrapper, store } from '../shared/store/store'
+import { wrapper } from '../shared/store/app/store'
 import { Provider as ReduxProvider } from 'react-redux'
 
 // nextUI
@@ -40,7 +40,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const { theme } = useNextTheme()
   const themeSetting = getTheme(theme)
   return (
-    <ReduxProvider store={store}>
+    // <ReduxProvider store={store}>
         <NextThemesProvider
           defaultTheme="dark"
           attribute="class"
@@ -59,7 +59,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
             />
           </NextUIProvider>
         </NextThemesProvider>
-    </ReduxProvider>
+    // </ReduxProvider>
   )
 }
 
