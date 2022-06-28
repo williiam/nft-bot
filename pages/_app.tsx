@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import React, { FC } from 'react'
 import type { AppProps } from 'next/app'
-import { Web3ContextProvider } from '../shared/context'
 import { ToastContainer } from 'react-toastify'
 
 // component
@@ -42,7 +41,6 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const themeSetting = getTheme(theme)
   return (
     <ReduxProvider store={store}>
-      <Web3ContextProvider>
         <NextThemesProvider
           defaultTheme="dark"
           attribute="class"
@@ -61,7 +59,6 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
             />
           </NextUIProvider>
         </NextThemesProvider>
-      </Web3ContextProvider>
     </ReduxProvider>
   )
 }

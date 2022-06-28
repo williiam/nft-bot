@@ -1,8 +1,6 @@
 import React from 'react'
-import { useWeb3Context } from '../shared/context'
 
 export function Web3Address() {
-  const { address } = useWeb3Context()
 
   return (
     <div className="flex items-center justify-center">
@@ -12,7 +10,6 @@ export function Web3Address() {
             Address
           </span>
           <span className="md:text-md truncate pl-4 text-right text-sm  font-light lg:text-lg">
-            {address}
           </span>
         </div>
       </div>
