@@ -11,52 +11,32 @@ import {
   Button,
   Link as LinkContainer,
   Spacer,
+  styled
 } from '@nextui-org/react'
 
 import { useWeb3UserRedux } from '../shared/hooks/Web3UserRedux'
+// import { useWeb3 } from '../shared/hooks/Web3UserContextOrigin'
+import { useWeb3 } from '../shared/hooks/Web3UserRedux'
 
 interface ConnectProps {
   connect: (() => Promise<void>) | null
 }
 
-export const CardButton = ({ children }) => {
-  return (
-    <Card
-      isPressable
-      isHoverable
-      variant="bordered"
-      as="button"
-      css={{
-        h: '$22',
-        justyContent: 'center',
-        color: '$primary-100',
-        backgroundColor: '$info-400',
-        backgroundImage: 'linear-gradient(#e66465, #9198e5);',
-        '&:hover': {
-          backgroundImage:
-            'linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)',
-          backgroundColor: '$info-300',
-        },
-      }}
-    >
-      <Card.Body id="CardBody" css={{ justyContent: 'center' }}>
-        <Text
-          id="text"
-          h3
-          size={30}
-          color="white"
-          css={{ mt: 0, color: '$lightText', textAlign: 'center' }}
-        >
-          {children}
-        </Text>
-      </Card.Body>
-    </Card>
-  )
-}
+export const CardButton = styled(Button, {
+  h: '$22',
+  justyContent: 'center',
+  color: '$primary-100',
+  backgroundColor: '$info-400',
+  backgroundImage: 'linear-gradient(#e66465, #9198e5);',
+  '&:hover': {
+    backgroundImage: 'linear-gradient(to right, #1fa2ff, #12d8fa, #a6ffcb)',
+    backgroundColor: '$info-300',
+  }
+})
 
 const ConnectButton = ({ connect }: ConnectProps) => {
   return connect ? (
-    <Button
+    <CardButton
       color="gradient"
       ghost
       css={{
@@ -88,7 +68,7 @@ const ConnectButton = ({ connect }: ConnectProps) => {
       >
         登入
       </Text>
-    </Button>
+    </CardButton>
   ) : (
     <CardButton>Loading...</CardButton>
   )
@@ -107,12 +87,12 @@ const DisconnectButton = ({ disconnect }: DisconnectProps) => {
 }
 
 export function Web3Button() {
-  const { web3Provider, connect, disconnect } = useWeb3UserRedux()
-  console.log('{ web3Provider, connect, disconnect } :', {
-    web3Provider,
-    connect,
-    disconnect,
-  })
+  const { web3Provider, connect, disconnect } = useWeb3()
+  // console.log('{ web3Provider, connect, disconnect } :', {
+  //   web3Provider,
+  //   connect,
+  //   disconnect,
+  // })
 
   return web3Provider ? (
     <DisconnectButton disconnect={disconnect} />

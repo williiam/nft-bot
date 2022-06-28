@@ -43,30 +43,25 @@ if (typeof window !== 'undefined') {
   })
 }
 
-export const useWeb3UserRedux = () => {
+export const useWeb3 = () => {
   const web3UserState:Web3UserState = useSelector((state: any) => state.web3User)
-  console.log('web3UserState :', web3UserState);
   const { provider, web3Provider, address, network } = web3UserState
   const dispatchReduxAction = useDispatch()
   const { isDark } = useTheme()
   const router = useRouter()
 
-  
   const connect = useCallback(async () => {
-    debugger;
     if (web3Modal) {
-      // return;
+    console.log('web3Modal :', web3Modal);
       try {
-        // isDark ? await web3Modal.updateTheme("dark") : await web3Modal.updateTheme("light")
-        const newProvider = await web3Modal.connect() //metamask , coinbase ...
-        console.log('newProvider :', newProvider);
-        debugger
+        const provider = await web3Modal.connect() //metamask , coinbase ...
+        const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
         toast.success('Connected to Web3')
-        await dispatchReduxAction(setWeb3UserState({
-          type: 'SET_WEB3_STATE',
-          payload: newProvider
-        } as web3UserAction))
-        router.push('/');
+        // await dispatchReduxAction(setWeb3UserState({
+        //   type: 'SET_WEB3_STATE',
+        //   payload: newProvider
+        // } as web3UserAction))
+        // router.push('/');
       } catch (e) {
         toast.error('連線失敗')
         console.log('connect error', e)
