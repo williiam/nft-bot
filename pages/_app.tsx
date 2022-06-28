@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import NavBar from '../components/Navbar/Navbar'
 
 // redux
-import { wrapper } from '../shared/store/app/store'
+import { wrapper } from '../shared/store/store'
 import { Provider as ReduxProvider } from 'react-redux'
 
 // nextUI

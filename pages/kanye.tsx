@@ -1,8 +1,8 @@
 import { NextPage } from 'next/types';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../shared/store/app/hooks';
+import { useAppDispatch, useAppSelector } from '../shared/store/hooks';
 import { getKanyeQuote } from '../shared/store/features/kanye';
-import { wrapper } from '../shared/store/app/store';
+import { wrapper } from '../shared/store/store';
 
 const kanye: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +24,12 @@ const kanye: NextPage = () => {
 kanye.getInitialProps = wrapper.getInitialPageProps(
   ({ dispatch }) =>
     async () => {
-      await dispatch(getKanyeQuote());
+      await dispatch(getKanyeQuote({
+        data: { quote: 'click that button' },
+        loading: null,
+        pending: false,
+        error: false,
+      }));
     }
 );
 

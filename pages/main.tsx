@@ -197,7 +197,7 @@ const AddressSection = ({ address }) => {
   )
 }
 
-const About: NextPage = () => {
+const Main: NextPage = () => {
   const { theme, isDark, type } = useTheme()
   const { address } = useWeb3Context()
 
@@ -243,4 +243,4 @@ const About: NextPage = () => {
   )
 }
 
-export default About
+export default Main

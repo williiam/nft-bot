@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../shared/store/app/hooks';
+import { useAppDispatch, useAppSelector } from '../shared/store/hooks';
 import { decrement, increment, incrementByAmount } from '../shared/store/features/counter';
 
 const IndexPage: React.FC = () => {

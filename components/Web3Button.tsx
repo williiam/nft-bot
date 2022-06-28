@@ -14,9 +14,9 @@ import {
   styled
 } from '@nextui-org/react'
 
-import { useWeb3UserRedux } from '../shared/hooks/Web3UserRedux'
+import { useWeb3UserRedux } from '../shared/hooks/Web3User'
 // import { useWeb3 } from '../shared/hooks/Web3UserContextOrigin'
-import { useWeb3 } from '../shared/hooks/Web3UserRedux'
+import { useWeb3 } from '../shared/hooks/Web3User'
 
 interface ConnectProps {
   connect: (() => Promise<void>) | null

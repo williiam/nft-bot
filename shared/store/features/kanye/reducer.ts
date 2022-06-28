@@ -2,13 +2,15 @@ import { createReducer } from '@reduxjs/toolkit';
 import { getKanyeQuote } from './actions';
 
 export type KanyeState = {
-  data: { quote: string };
-  pending: boolean;
-  error: boolean;
+  data: { quote: string }
+  loading: 'idle' | 'pending' | 'succeeded' | 'failed' | null
+  pending: boolean
+  error: boolean
 };
 
 const initialState: KanyeState = {
   data: { quote: 'click that button' },
+  loading: null,
   pending: false,
   error: false,
 };
