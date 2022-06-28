@@ -1,89 +1,91 @@
 // 1. Import `createTheme`
-import { createTheme } from "@nextui-org/react"
+import { createTheme,Theme } from "@nextui-org/react"
 
 // 2. Call `createTheme` and pass your custom values
-export const darkTheme = createTheme({
+export const darkTheme:Theme = createTheme({
     type: "dark", // it could be "light" or "dark"
     className: "dark",
     theme: {
         colors: {
 
-            default:'green',
+            // dark
+            //上淺層->下深層
+            layer0: '$foreground',  //最上層
+            layer1: '$accents9',
+            layer2: '$accents8',
+            layer3: '$accents7',
+            layer4: '$accents6',
+            layer5: '$accents5',
+            
+            layer6: '$accents4',
+            layer7: '$accents3',
+            layer8: '$accents2',
+            layer9: '$accents1',
+            layer10: '$accents0',
+            layer11: '$background', //最下層
+            
+            titleColor: '$primary3',
+            textColor: '$primary9',
+            textContrast: 'white',
+            lightText: 'white',
+            darkText: 'dark',
+    
+            cardHover: '$layer5',
+            btnHover: '$layer5',
+
+           // 上淺層->下深層
+            //0123 -> 789
+            gradient1: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
+            gradient2: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
+            gradient3: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
 
             // brand colors
-            primaryLight: '$blue200',
-            primaryLightHover: '$blue300',
-            primaryLightActive: '$blue400',
-            primaryLightContrast: '$blue600',
-            primaryBorder: '$blue500',
-            primaryBorderHover: '$blue600',
-            primarySolidHover: '$blue700',
-            primarySolidContrast: '$white',
-            primaryShadow: '$blue500',
-
-            // brand colors
-            primary: '$blue500',
-            $primaryHover: '$blue300',
-            $primaryActive: '$blue400',
-            $primaryContrast: '$blue600',
-            $primaryBorder: '$blue500',
-            $primaryBorderHover: '$blue600',
-            $primarySolidHover: '$blue700',
-            $primarySolidContrast: '$white',
-            $primaryShadow: '$blue500',
-
-            projectBackground: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
-            "buttonHover-100":'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)', 
-
-
-            // "primary-100": "black",
-            "primary-100": "#EAF2F5",
-            "primary-200": "#D6E4EB",
-            "primary-300": "#ABBAC5",
-            "primary-400": "#74818B",
-            "primary-500": "#31383F",
-            "primary-600": "#232C36",
-            "primary-700": "#18202D",
-            "primary-800": "#0F1624",
-            "primary-900": "#090F1E",
-            "success-100": "#E5F8CD",
-            "success-200": "#C6F29E",
-            "success-300": "#96D868",
-            "success-400": "#65B23E",
-            "success-500": "#2F7F11",
-            "success-600": "#206D0C",
-            "success-700": "#135B08",
-            "success-800": "#094905",
-            "success-900": "#033C03",
-            "info-100": "#C9EAFA",
-            "info-200": "#95D1F5",
-            "info-300": "#5DA9E1",
-            "info-400": "#3480C3",
-            "info-500": "#044D9B",
-            "info-600": "#023B85",
-            "info-700": "#022C6F",
-            "info-800": "#011F59",
-            "info-900": "#00164A",
-            "warning-100": "#FBF3C9",
-            "warning-200": "#F7E496",
-            "warning-300": "#E9CA5F",
-            "warning-400": "#D3AC37",
-            "warning-500": "#B78403",
-            "warning-600": "#9D6C02",
-            "warning-700": "#835701",
-            "warning-800": "#6A4300",
-            "warning-900": "#573400",
-            "danger-100": "#F9CDCE",
-            "danger-200": "#F39DA8",
-            "danger-300": "#DB6881",
-            "danger-400": "#B83F65",
-            "danger-500": "#891143",
-            "danger-600": "#750C42",
-            "danger-700": "#620840",
-            "danger-800": "#4F053A",
-            "danger-900": "#410336",
+            primary1: "#F4FAFD",
+            primary2: "#E9F5FB",
+            primary3: "#DAEAF3",    
+            primary4: "#C9DBE8",
+            primary5: "#B3C7D9",
+            primary6: "#829DBA",
+            primary7: "#5A769C",
+            primary8: "#39527D",
+            primary9: "#223868",
+            success1: "#F3FBCF",
+            success2: "#E5F7A1",
+            success3: "#CCE96E",
+            success4: "#AED348",
+            success5: "#87B717",
+            success6: "#6E9D10",
+            success7: "#58830B",
+            success8: "#436A07",
+            success9: "#345704",
+            info1: "#D5F5FE",
+            info2: "#ADE7FE",
+            info3: "#83D4FE",
+            info4: "#64C0FD",
+            info5: "#32A1FC",
+            info6: "#247DD8",
+            info7: "#195EB5",
+            info8: "#0F4292",
+            info9: "#092E78",
+            warning1: "#FEF7D0",
+            warning2: "#FEECA1",
+            warning3: "#FDDE72",
+            warning4: "#FBCF4F",
+            warning5: "#F9B916",
+            warning6: "#D69810",
+            warning7: "#B37A0B",
+            warning8: "#905D07",
+            warning9: "#774904",
+            danger1: "#FFEEDE",
+            danger2: "#FFD9BD",
+            danger3: "#FFBF9C",
+            danger4: "#FFA583",
+            danger5: "#FF7C5B",
+            danger6: "#DB5542",
+            danger7: "#B7352D",
+            danger8: "#931D1F",
+            danger9: "#7A111B",
               
-
             // container
 
                 // color

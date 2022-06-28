@@ -23,6 +23,7 @@ export const getToggleTheme = (theme:string|undefined):string|undefined => {
       return "light";
       break;
     default:
+      return "dark";
       break;
   }
 }

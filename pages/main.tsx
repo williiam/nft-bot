@@ -3,10 +3,19 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Web3Button, Web3Address } from '../components'
 
+// contexxt (即將被Redux取代)
+import { useWeb3Context } from '../shared/context'
+
+// component
 import NavBar from '../components/Navbar/Navbar'
+
+// common
+import { getToggleTheme } from '../shared/common/theme'
 
 // UI
 import {
+  css,
+  styled,
   Container,
   Grid,
   Col,
@@ -18,7 +27,6 @@ import {
   Spacer,
 } from '@nextui-org/react'
 import { darkTheme } from '../shared/theme/darkTheme'
-import { styled } from '@stitches/react'
 
 // Theme
 import { useTheme as useNextTheme } from 'next-themes'
@@ -37,20 +45,17 @@ export const AppContainer = styled(Container, {
     bc: '$tokenColor',
     color: '$myColor',
   },
-  // color: '$myColor',
-  // bcColor: '$myColor'
   color: '$bc',
-  bcColor: 'blue50',
-  // animationName: fadeIn
+  background: '$blue50',
 })
 
 export const CardButton = styled(Button, {
   bcColor: 'gainsboro',
   // borderRadius: '9999px',
-  fontSize: '13px',
+  fontSize: '$9',
   heigth: '100%',
   margin: '0',
-  padding: '10px 15px',
+  padding: '$8 $10',
   '&:hover': {
     bc: '$colors$primary',
   },
@@ -59,58 +64,65 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const MockItem = ({ url, text }) => {
+export const LinkCardItem = ({ url, text }) => {
+  const { theme } = useTheme()
   return (
     <Card
       isPressable
       isHoverable
-      variant="bordered"
+      variant="shadow"
       id="Card"
       css={{
         h: '$22',
         justyContent: 'center',
-        color: '$primary-100',
-        backgroundColor: '$info-600',
-        // $$cardColor: '$colors$primary',
+        color: '$primary1',
+        bc: '$layer9',
         '&:hover': {
-          backgroundColor: '$info-300',
+          color: '$textContrast',
+          bc: '$cardHover',
         },
       }}
     >
-      <Card.Body id="CardBody" css={{ justyContent: 'center' }}>
-        <LinkContainer
-          id="LinkContainer"
-          css={{
-            m: 0,
-            textAlign: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Link href={url}>
+      <Link href={url} passHref>
+        <Card.Body id="CardBody" css={{ justyContent: 'center' }}>
+          <LinkContainer
+            id="LinkContainer"
+            css={{
+              m: 0,
+              textAlign: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <Text
               id="text"
               h3
               size={30}
-              color="white"
-              css={{ mt: 0, color: '$primary-100', textAlign: 'center' }}
+              css={{
+                mt: 0,
+                textAlign: 'center',
+                color: '$titleColor',
+                '&:hover': {
+                  // color: '$textContrast',
+                },
+              }}
             >
               {text}
             </Text>
-          </Link>
-        </LinkContainer>
-      </Card.Body>
+          </LinkContainer>
+        </Card.Body>
+      </Link>
     </Card>
   )
 }
 
-const AddressSection = () => {
+const AddressSection = ({ address }) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
       <Card.Header css={{ dflex: 'center' }}>
         <Text
           h1
-          size="2.8rem"
           css={{
+            fs: '$space$15',
             textGradient: '45deg, $yellow600 -20%, $red600 100%',
           }}
           weight="bold"
@@ -119,29 +131,64 @@ const AddressSection = () => {
         </Text>
       </Card.Header>
       <Card.Body>
-      <Text
-        h3
-        size="1.6rem"
-        css={{
-          textGradient: '180deg, $blue600 -50%, $pink600 50%',
-          mb:'$4'
-        }}
-        weight="bold"
-      >
-        我的錢包地址
-      </Text>
-        <Card variant="bordered" css={{ mw: '400px',color:'$primary-100',backgroundColor:'$primary-600' }}>
+        <Text
+          h3
+          css={{
+            mb: '$4',
+            textGradient: '180deg, $blue600 -50%, $pink600 50%',
+            fs: '$space$11',
+          }}
+          weight="bold"
+        >
+          我的錢包地址
+        </Text>
+        <Card
+          variant="bordered"
+          css={{
+            maxW: '700px',
+            ta: 'center',
+            color: '$primary-100',
+            bc: '$primary-600',
+          }}
+        >
           <Card.Body>
             <Text
               h1
-              size="1.4rem"
-              css={{
-                // textGradient: '45deg, $primary-100 -20%, $primary-100 100%',
-                color:'$primary-100'
-              }}
               weight="bold"
+              css={{
+                us: 'all',
+                mt: 0,
+                ta: 'center',
+                fs: '$space$10',
+                color: '$titleColor',
+              }}
             >
-              {'12345678901-abcdefghijk'}
+              {address}
+            </Text>
+          </Card.Body>
+        </Card>
+        <Card
+          variant="bordered"
+          css={{
+            maxW: '400px',
+            mt: '$8',
+            ta: 'center',
+            color: '$primary-100',
+            bc: '$primary-600',
+          }}
+        >
+          <Card.Body>
+            <Text
+              h1
+              weight="bold"
+              css={{
+                us: 'all',
+                ta: 'left',
+                fs: '$space$9',
+                color: '$titleColor',
+              }}
+            >
+              餘額：{address}
             </Text>
           </Card.Body>
         </Card>
@@ -151,31 +198,48 @@ const AddressSection = () => {
 }
 
 const About: NextPage = () => {
-  const { setTheme } = useNextTheme()
-  const { theme, isDark, type, Text } = useTheme()
-  setTheme('dark')
-  console.log('{ theme,isDark, type } :', { theme, isDark, type })
+  const { theme, isDark, type } = useTheme()
+  const { address } = useWeb3Context()
+
+  // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
 
   return (
-    <>
+    <div>
       <NavBar></NavBar>
+      <Spacer
+        css={{
+          h: '7.5rem',
+          '@xs': {
+            h: '6rem',
+          },
+          '@sm': {
+            h: '2.5rem',
+          },
+          '@md': {
+            h: '2.5rem',
+          },
+          '@lg': {
+            h: '2.5rem',
+          },
+        }}
+      />
       <Spacer y={1} />
-      <AppContainer fluid css={{ color:'blue', backgroundColor: 'transparent' }}>
-        <AddressSection />
+      <AppContainer css={{ backgroundColor: 'transparent' }}>
+        <AddressSection address={address} />
         <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
           <Grid xs={12} md={4}>
-            <MockItem url="/whales" text="大戶清單" />
+            <LinkCardItem url="/whales" text="大戶清單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <MockItem url="/trace" text="我的跟單" />
+            <LinkCardItem url="/trace" text="我的跟單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <MockItem url="/wallet" text="錢包管理" />
+            <LinkCardItem url="/wallet" text="錢包管理" />
           </Grid>
         </Grid.Container>
       </AppContainer>
-    </>
+    </div>
   )
 }
 
