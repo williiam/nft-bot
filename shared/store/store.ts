@@ -6,15 +6,12 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-import { counterReducer } from './features/counter';
-// import { kanyeReducer } from '../features/kanye';
-import kanyeReducer from './features/kanye/kanyeSlice-compactWay'
 import web3UserReducer from './features/web3User'
+import sectionReducer from './features/section'
 
 const combinedReducer = combineReducers({
-  counter: counterReducer,
-  kanyeQuote: kanyeReducer,
   web3User: web3UserReducer,
+  section: sectionReducer,
 });
 
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {

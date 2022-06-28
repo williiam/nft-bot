@@ -9,9 +9,13 @@ import { toast } from 'react-toastify'
 
 // shared
 import API from '../../../common/api'
+import { Toast } from '../../../common/toast'
 
 // actions
 import { setWeb3UserState,resetWeb3UserState,setIsLoggedIn } from './index'
+
+// router
+import Router from 'next/router'
 
 /**
  * 給定provider，取得web3UserState
@@ -26,15 +30,54 @@ export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) =
   const signer = await web3Provider.getSigner()
   const network = await web3Provider.getNetwork()
   const address = await signer.getAddress()
-  toast.success('Connected to Web3')
-  toast.info('正在登入NFT BOT')
+  Toast.success('Connected to Web3')
 
   const postBody = {
     address,
     network:network.name
   }
 
-  const loginResponse = await API.POST('/api/user/login',postBody,signer);
+  // const loginResponse = await toast.promise(
+  //   API.POST('/api/user/login',postBody,signer),
+  //   {
+  //     pending: {
+  //       render(){
+  //         return "正在登入NFT.bot"
+  //       },
+  //       position: "bottom-right",
+  //       hideProgressBar: false,
+  //       draggable: true,
+  //       icon: false
+  //     },
+  //     success: {
+  //       render({data}){
+  //         return `登入NFT.bot成功`
+  //       },
+  //       position: "bottom-right",
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       icon: "🟢"
+  //     },
+  //     error: {
+  //       render({data}){
+  //         // When the promise reject, data will contains the error
+  //         return "登入失敗 🤯"
+  //       },
+  //       position: "bottom-right",
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //     }
+  //   }
+  // )
+
+  // server 爆了 先用假的response
+  const loginResponse = {
+    data:"Login success"
+  }
   console.log('loginResponse :', loginResponse);
   
   const web3UserData = {
@@ -46,12 +89,22 @@ export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) =
   }
 
   if(loginResponse&&loginResponse.data==="Login success"){
-    toast.success('登入NFT.bot 成功');
+    // toast.success('登入NFT.bot 成功');
     // dispatch登入成功(pageFlow)
     // thunkAPI.dispatch(setPageFlow("home"))
     thunkAPI.dispatch(setWeb3UserState({web3UserData}))
     thunkAPI.dispatch(setIsLoggedIn({isLoggedIn:true}))
+    Router.push('/main')
   }
 
   return web3UserData;
+});
+
+/**
+ * 登出使用者(沒有登出API可以打)
+ * @param {provider} provider - the provider returned from web3Modal
+ */
+ export const logout = createAsyncThunk('NFTbot/logout', async (payload,thunkAPI) => {
+  thunkAPI.dispatch(resetWeb3UserState())
+  Router.push('/')
 });
