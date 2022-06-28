@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
-import sampleReducer from "./sample/sampleReducer";
-import web3Reducer from "./web3Provider/web3Reducer";
+import web3UserReducer from "./web3User/web3UserReducer";
 
 export default combineReducers({
-  sampleData: sampleReducer,
-  web3Provider: web3Reducer,
+  web3User: web3UserReducer,
 });

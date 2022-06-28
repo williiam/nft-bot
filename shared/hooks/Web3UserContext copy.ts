@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useCallback } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { setWeb3Provider } from "../store/web3Provider/web3Action";
+import { setWeb3Provider } from "../store/web3User/web3UserAction";
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -11,11 +11,17 @@ import {
   web3InitialState,
   web3Reducer,
 } from '../context/reducers'
-import { Web3ProviderState } from '../store/web3Provider/web3Types'
-import { web3ProviderAction } from '../store/web3Provider/web3Action'
+import { Web3ProviderState } from '../store/web3User/web3UserTypes'
+import { web3ProviderAction } from '../store/web3User/web3UserAction'
 import { StoreState } from '../store/store'
 
 import { toast } from 'react-toastify'
+
+// Theme
+import { useTheme } from '@nextui-org/react'
+
+// router
+import { useRouter } from 'next/router'
 
 const providerOptions = {
   walletconnect: {
@@ -44,59 +50,36 @@ if (typeof window !== 'undefined') {
 
 export const useWeb3 = () => {
   const [state, dispatch] = useReducer(web3Reducer, web3InitialState)
-  const web3ProviderState = useSelector((state:any) => state.web3Provider);
-  const dispatchReduxAction = useDispatch();
+  const web3ProviderState = useSelector((state: any) => state.web3Provider)
+  const dispatchReduxAction = useDispatch()
   const { provider, web3Provider, address, network } = state
+  const { isDark } = useTheme()
+  const router = useRouter()
 
   const connect = useCallback(async () => {
     if (web3Modal) {
-      return;
+      // return;
       try {
+        isDark ? await web3Modal.updateTheme("dark") : await web3Modal.updateTheme("light")
         const provider = await web3Modal.connect() //metamask , coinbase ...
         const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
         const signer = await web3Provider.getSigner()
-        const network = await web3Provider.getNetwork()
-        const address = await signer.getAddress()
-        toast.success('Connected to Web3');
-        toast.info('正在登入NFT BOT')
-        const postBody: DataToSign = {
-          address,
-          network:network.name //需驗證此為主網路
-        }
-        const loginResponse = await API.POST('/api/user/login',postBody,signer);
-        console.log('loginResponse :', loginResponse);
-        // if(loginResponse.status!=="200"){
-        //   toast.error('登入NFT BOT失敗，請重新登入');
-        // }
-        const newWeb3Provider : Web3ProviderState = {
-          provider,
-          web3Provider,
-          address,
-          signer,
-          network
-        }
-
-        dispatch({
-          type: 'SET_WEB3_PROVIDER',
-          provider,
-          web3Provider,
-          address,
-          signer,
-          network,
-        } as Web3Action)
-
-        dispatchReduxAction(setWeb3Provider({
-          type: 'SET_WEB3_PROVIDER',
-          payload: newWeb3Provider
+        // const network = await web3Provider.getNetwork()
+        // const address = await signer.getAddress()
+        toast.success('Connected to Web3')
+        dispatchReduxAction(setWeb3State({
+          type: 'SET_WEB3_STATE',
+          payload: provider
         } as web3ProviderAction))
-
+        router.push('/');
       } catch (e) {
+        toast.error('連線失敗')
         console.log('connect error', e)
       }
     } else {
       console.error('No Web3Modal')
     }
-  }, [])
+  }, [provider])
 
   const disconnect = useCallback(async () => {
     if (web3Modal) {
@@ -119,17 +102,20 @@ export const useWeb3 = () => {
   }, [provider])
 
   // Auto connect to the cached provider
-  useEffect(() => {
-    if (web3Modal && web3Modal.cachedProvider) {
-      connect()
-    }
-  }, [connect])
+  // useEffect(() => {
+  //   if (web3Modal && web3Modal.cachedProvider) {
+  //     connect()
+  //   }
+  // }, [connect])
 
   // EIP-1193 events
   useEffect(() => {
     if (provider?.on) {
-      const handleAccountsChanged = (accounts: string[]) => {
+      const handleAccountsChanged = async (accounts: string[]) => {
         toast.info('Changed Web3 Account')
+        toast.info('正在登入NFT BOT')
+        const signer = provider.getSigner()
+        await login(signer);
         dispatch({
           type: 'SET_ADDRESS',
           address: accounts[0],
@@ -137,7 +123,7 @@ export const useWeb3 = () => {
 
         dispatchReduxAction(setWeb3Provider({
           type: 'SET_ADDRESS',
-          payload:{address: accounts[0]},
+          payload: { address: accounts[0] },
         } as web3ProviderAction))
       }
 

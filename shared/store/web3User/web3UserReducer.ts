@@ -1,4 +1,4 @@
-import { Web3ProviderState,web3ProviderAction } from './web3Types'
+import { Web3ProviderState,web3ProviderAction } from './web3UserTypes'
 
 const Web3ProviderInitialState: Web3ProviderState  = {
   provider: null,
@@ -12,25 +12,23 @@ const Web3ProviderInitialState: Web3ProviderState  = {
 
 const web3ProviderReducer = (state = Web3ProviderInitialState, action:web3ProviderAction) => {
   switch (action.type) {
-    case 'SET_WEB3_PROVIDER':
+    case 'SET_WEB3_STATE':
       return Object.assign({}, state, {
         provider: action.payload.provider,
         web3Provider: action.payload.web3Provider,
+        signer: action.payload.signer,
         address: action.payload.address,
-        network: action.payload.network,
-        signer: action.payload.signer
+        network: action.payload.network
       });
-      case 'SET_ADDRESS':
-        return {
-          ...state,
-          address: action.payload.address,
-        }
-      case 'SET_NETWORK':
-        return {
-          ...state,
-          network: action.payload.network,
-        }
-      case 'RESET_WEB3_PROVIDER':
+      case 'SET_WEB3_ADDRESS':
+        return Object.assign({}, state, {
+          address: action.payload.address
+        });
+      case 'SET_WEB3_NETWORK':
+        return Object.assign({}, state, {
+          network: action.payload.network
+        });
+      case 'RESET_WEB3_STATE':
         return Web3ProviderInitialState
       default:
         return state

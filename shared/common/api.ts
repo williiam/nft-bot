@@ -3,7 +3,8 @@ import { getSignature } from './Web3Utils'
 import { DataToSign } from './types'
 
 const axiosObject = axios.create({
-  baseURL: 'https://nft-bot-354317.de.r.appspot.com',
+  // baseURL: 'https://nft-bot-354317.de.r.appspot.com',
+  baseURL: 'https://cthua.ebg.tw',
 //   timeout: 1000,
   headers: { 'X-Custom-Header': 'foobar' },
 })

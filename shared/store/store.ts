@@ -3,17 +3,17 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createWrapper } from "next-redux-wrapper";
 import rootReducer from "./rootReducer";
-import { Web3ProviderState } from "./web3Provider/web3Types"
+import { Web3UserState } from "./web3User/web3UserTypes"
 
 export type StoreState = {
-  web3Provider: Web3ProviderState
+  web3User: Web3UserState
   trace: any
   whale: any
 }
 
 // initial states here
 const initalState = {
-  web3Provider: {},
+  web3User: {},
   trace: {},
   whale: {}
 } as StoreState;
