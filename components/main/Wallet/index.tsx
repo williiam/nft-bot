@@ -119,7 +119,7 @@ const AddressSection = ({ address }) => {
           }}
           weight="bold"
         >
-          我的錢包
+          錢包管理
         </Text>
       </Card.Header>
       <Card.Body>
@@ -193,17 +193,17 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
   const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
-  // const { provider, web3Provider, address, network } = state
+  const { provider, web3Provider, address, network } = state
   const router = useRouter()
 
   return (
     <div>
       <AppContainer css={{ backgroundColor: 'transparent' }}>
+        <AddressSection address={address} />
         <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
           <Grid xs={12} md={4}>
-            {/* <LinkCardItem url="/whales" text="大戶清單" /> */}
-        <AddressSection address={"test"} />
+            <LinkCardItem url="/whales" text="大戶清單" />
           </Grid>
           <Grid xs={12} md={4}>
             <LinkCardItem url="/trace" text="我的跟單" />
