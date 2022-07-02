@@ -1,22 +1,14 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import React from 'react'
 import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
 
 // component
 import Table from './table'
 
-// common
-import { getToggleTheme } from '../shared/common/theme'
-
 // UI
 import {
-  css,
   styled,
   Container,
   Grid,
-  Col,
-  Row,
   Card,
   Text,
   Button,
@@ -24,18 +16,8 @@ import {
   Spacer,
 } from '@nextui-org/react'
 
-// Theme
-import { useTheme as useNextTheme } from 'next-themes'
-import { useTheme } from '@nextui-org/react'
-
 // redux
 import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks'
-import {
-  switchToHome,
-  switchToWhale,
-  switchToTrace,
-  switchToWallet,
-} from '../../../shared/store/features/section/actions'
 
 // router
 import { useRouter } from 'next/router'
@@ -60,8 +42,15 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const LinkCardItem = ({ url, text }) => {
-  const { theme } = useTheme()
+interface ILinkCardItemPropType {
+  url: string;
+  text: string;
+}
+
+export const LinkCardItem: React.FC<ILinkCardItemPropType> = (
+  props: ILinkCardItemPropType
+) => {
+  const { url, text } = props;
   return (
     <Card
       isPressable
@@ -110,8 +99,10 @@ export const LinkCardItem = ({ url, text }) => {
     </Card>
   )
 }
-
-const AddressSection = ({ address }) => {
+interface IAddressSectionPropType {
+  address: string | null | undefined;
+}
+const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddressSectionPropType) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
       <Card.Header css={{ dflex: 'center' }}>

@@ -1,20 +1,16 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
+import React from 'react'
 import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
+import { Web3Button } from '../components'
 
 // component
-import NavBar from '../components/main/Navbar'
 
 // common
-import { getToggleTheme } from '../shared/common/theme'
 
 // UI
 import {
   Container,
   Grid,
-  Col,
-  Row,
   Card,
   Text,
   Button,
@@ -63,7 +59,7 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const LinkCardItem = ({ url, text }) => {
+export const LinkCardItem: React.FC = ({ url, text }) => {
   return (
     <Card
       isPressable
@@ -152,8 +148,6 @@ const LoginPanel = () => {
 }
 
 const About: NextPage = () => {
-  const { setTheme } = useNextTheme()
-  const { theme, isDark, type } = useTheme()
 
   return (
     <>

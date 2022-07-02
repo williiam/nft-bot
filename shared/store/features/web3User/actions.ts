@@ -4,18 +4,17 @@ import { createAction } from '@reduxjs/toolkit';
 
 // external library
 import { ethers } from 'ethers'
-import axios from 'axios';
-import { toast } from 'react-toastify'
 
 // shared
-import API from '../../../common/api'
 import { Toast } from '../../../common/toast'
+import API,{postBody} from '../../../common/api'
 
 // actions
 import { setWeb3UserState,resetWeb3UserState,setIsLoggedIn } from './index'
 
 // router
 import Router from 'next/router'
+import { IProviderInfo } from 'web3modal';
 
 /**
  * 給定provider，取得web3UserState
@@ -24,7 +23,7 @@ import Router from 'next/router'
  * 登入失敗則不做事
  * @param {provider} provider - the provider returned from web3Modal
  */
-export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) => {
+export const login = createAsyncThunk('NFTbot/login', async (payload:{provider:IProviderInfo},thunkAPI) => {
   const { provider } = payload
   const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
   const signer = await web3Provider.getSigner()
@@ -32,7 +31,7 @@ export const login = createAsyncThunk('NFTbot/login', async (payload,thunkAPI) =
   const address = await signer.getAddress()
   Toast.success('Connected to Web3')
 
-  const postBody = {
+  const postBody:postBody = {
     address,
     network:network.name
   }

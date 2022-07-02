@@ -1,39 +1,18 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
-
-// component
-import NavBar from '../components/main/Navbar/Navbar'
-
-// common
-import { getToggleTheme } from '../shared/common/theme'
+import React from 'react'
 
 // UI
 import {
-  css,
   styled,
   Container,
   Grid,
-  Col,
-  Row,
   Card,
   Text,
   Button,
-  Link as LinkContainer,
   Spacer,
 } from '@nextui-org/react'
 
-// Theme
-import { useTheme as useNextTheme } from 'next-themes'
-import { useTheme } from '@nextui-org/react'
-
 // redux
-import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
-import { switchToHome,switchToWhale,switchToTrace,switchToWallet } from '../../../shared/store/features/section/actions'
-
-// router
-import { useRouter } from 'next/router'
+import {  useAppSelector } from '../../../shared/store/hooks';
 
 export const AppContainer = styled(Container, {
 
@@ -56,58 +35,10 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const LinkCardItem = ({ url, text }) => {
-  const { theme } = useTheme()
-  return (
-    <Card
-      isPressable
-      isHoverable
-      variant="shadow"
-      id="Card"
-      css={{
-        h: '$22',
-        justyContent: 'center',
-        color: '$primary1',
-        bc: '$layer9',
-        '&:hover': {
-          color: '$textContrast',
-          bc: '$cardHover',
-        },
-      }}
-    >
-      <Link href={url} passHref>
-        <Card.Body id="CardBody" css={{ justyContent: 'center' }}>
-          <LinkContainer
-            id="LinkContainer"
-            css={{
-              m: 0,
-              textAlign: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              id="text"
-              h3
-              size={30}
-              css={{
-                mt: 0,
-                textAlign: 'center',
-                color: '$titleColor',
-                '&:hover': {
-                  // color: '$textContrast',
-                },
-              }}
-            >
-              {text}
-            </Text>
-          </LinkContainer>
-        </Card.Body>
-      </Link>
-    </Card>
-  )
+interface IAddressSectionPropType {
+  address: string | null | undefined;
 }
-
-const AddressSection = ({ address }) => {
+const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddressSectionPropType) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
       <Card.Header css={{ dflex: 'center' }}>
@@ -190,11 +121,8 @@ const AddressSection = ({ address }) => {
 }
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
-  const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
-  const { provider, web3Provider, address, network } = state
-  const router = useRouter()
+  const { state } = useAppSelector((state) => state.web3User);
+  const { address } = state
 
   return (
     <div>
@@ -203,13 +131,10 @@ const Home = () => {
         <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/whales" text="大戶清單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/trace" text="我的跟單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/wallet" text="錢包管理" />
           </Grid>
         </Grid.Container>
       </AppContainer>

@@ -1,14 +1,9 @@
 import type { NextPage } from 'next'
-import { useEffect } from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
-
+import React from 'react'
 // component
 import NavBar from '../components/main/Navbar'
 
 // common
-import { getToggleTheme } from '../shared/common/theme'
 
 // UI
 import {
@@ -60,7 +55,7 @@ const Main: NextPage = () => {
   // const { provider, web3Provider, address, network } = state
   const router = useRouter()
 
-  const renderCurrentSelection = () => {
+  const renderCurrentSelection:React.FC = () => {
     switch (currentSection.name) {
         case "HOME":
             return <Home/>;

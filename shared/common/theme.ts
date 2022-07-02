@@ -14,7 +14,7 @@ export const getTheme = (theme:string| undefined): typeof lightTheme =>{
   }
 }
 
-export const getToggleTheme = (theme:string|undefined):string|undefined => {
+export const getToggleTheme = (theme:string|undefined):string => {
   switch (theme) {
     case "light":
       return "dark";

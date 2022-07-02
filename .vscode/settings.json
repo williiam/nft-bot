@@ -1,0 +1,5 @@
+{
+    "eslint.validate": ["typescript", "typescriptreact"],
+    "eslint.codeActionOnSave": true,
+    "typescript.validate.enable": true,
+}

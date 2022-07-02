@@ -1,22 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import React from 'react'
+
 import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
-
-// component
-import NavBar from '../components/main/Navbar/Navbar'
-
-// common
-import { getToggleTheme } from '../shared/common/theme'
 
 // UI
 import {
-  css,
   styled,
   Container,
   Grid,
-  Col,
-  Row,
   Card,
   Text,
   Button,
@@ -25,18 +15,12 @@ import {
 } from '@nextui-org/react'
 
 // Theme
-import { useTheme as useNextTheme } from 'next-themes'
-import { useTheme } from '@nextui-org/react'
 
 // redux
-import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
-import { switchToHome,switchToWhale,switchToTrace,switchToWallet } from '../../../shared/store/features/section/actions'
+import { useAppSelector } from '../../../shared/store/hooks'
 
-// router
-import { useRouter } from 'next/router'
 
 export const AppContainer = styled(Container, {
-
   color: '$bc',
   background: '$blue50',
 })
@@ -56,8 +40,15 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const LinkCardItem = ({ url, text }) => {
-  const { theme } = useTheme()
+interface ILinkCardItemPropType {
+  url: string;
+  text: string;
+}
+
+export const LinkCardItem: React.FC<ILinkCardItemPropType> = (
+  props: ILinkCardItemPropType
+) => {
+  const { url, text } = props;
   return (
     <Card
       isPressable
@@ -107,7 +98,10 @@ export const LinkCardItem = ({ url, text }) => {
   )
 }
 
-const AddressSection = ({ address }) => {
+interface IAddressSectionPropType {
+  address: string| null | undefined;
+}
+const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddressSectionPropType) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
       <Card.Header css={{ dflex: 'center' }}>
@@ -190,11 +184,8 @@ const AddressSection = ({ address }) => {
 }
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
-  const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
-  const { provider, web3Provider, address, network } = state
-  const router = useRouter()
+  const { state } = useAppSelector((state) => state.web3User)
+  const { address } = state;
 
   return (
     <div>

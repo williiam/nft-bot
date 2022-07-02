@@ -1,6 +1,11 @@
 import axios from 'axios'
-import { getSignature } from './Web3Utils'
 import { DataToSign } from './types'
+
+export type postBody = {
+  address: string
+  network?: string 
+}
+
 
 const axiosObject = axios.create({
   // baseURL: 'https://nft-bot-354317.de.r.appspot.com',

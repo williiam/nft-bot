@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // redux
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 

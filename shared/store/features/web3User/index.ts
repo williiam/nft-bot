@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 // redux
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // library
 import { ethers } from 'ethers'
 
 // imports
-import type { RootState } from '../../store';
 import { login,logout } from './actions';
 
 export type Web3UserData = {
-    provider: any
-    web3Provider: ethers.providers.Web3Provider | null | undefined
-    signer: (() => Promise<void>) | null
-    address: string | null | undefined
-    network: ethers.providers.Network | null | undefined
-    connect: (() => Promise<void>) | null
-    disconnect: (() => Promise<void>) | null
+    web3UserData?: any;
+    provider?: any
+    web3Provider?: ethers.providers.Web3Provider | null | undefined
+    signer?: (() => Promise<void>) | null
+    address?: string | null | undefined
+    network?: ethers.providers.Network | null | undefined
+    connect?: (() => Promise<void>) | null
+    disconnect?: (() => Promise<void>) | null
 };
 
 export type Web3UserState = {
@@ -50,7 +51,7 @@ export const web3UserSlice = createSlice({
       // return Object.assign(state.data, action.payload)
     },
     resetWeb3UserState: () => initialState,
-    setIsLoggedIn: (state,action:PayloadAction<boolean>) => {
+    setIsLoggedIn: (state,action:PayloadAction<{isLoggedIn:boolean}>) => {
       console.log('action :', action);
       if(action.payload.isLoggedIn===false){
         state=initialState
