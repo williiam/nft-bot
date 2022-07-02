@@ -3,10 +3,6 @@ import React from 'react'
 import Link from 'next/link'
 import { Web3Button } from '../components'
 
-// component
-
-// common
-
 // UI
 import {
   Container,
@@ -101,7 +97,7 @@ export const LinkCardItem: React.FC = ({ url, text }) => {
   )
 }
 
-const LoginPanel = () => {
+const LoginPanel: React.FC = () => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
       <Card.Header css={{ dflex: 'center' }}>
@@ -147,7 +143,7 @@ const LoginPanel = () => {
   )
 }
 
-const About: NextPage = () => {
+const LandingPage: NextPage = () => {
 
   return (
     <>
@@ -170,4 +166,4 @@ const About: NextPage = () => {
   )
 }
 
-export default About
+export default LandingPage;

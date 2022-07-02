@@ -56,57 +56,6 @@ export const CardButton = styled(Button, {
   },
 })
 
-export const LinkCardItem = ({ url, text }) => {
-  const { theme } = useTheme()
-  return (
-    <Card
-      isPressable
-      isHoverable
-      variant="shadow"
-      id="Card"
-      css={{
-        h: '$22',
-        justyContent: 'center',
-        color: '$primary1',
-        bc: '$layer9',
-        '&:hover': {
-          color: '$textContrast',
-          bc: '$cardHover',
-        },
-      }}
-    >
-      <Link href={url} passHref>
-        <Card.Body id="CardBody" css={{ justyContent: 'center' }}>
-          <LinkContainer
-            id="LinkContainer"
-            css={{
-              m: 0,
-              textAlign: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text
-              id="text"
-              h3
-              size={30}
-              css={{
-                mt: 0,
-                textAlign: 'center',
-                color: '$titleColor',
-                '&:hover': {
-                  // color: '$textContrast',
-                },
-              }}
-            >
-              {text}
-            </Text>
-          </LinkContainer>
-        </Card.Body>
-      </Link>
-    </Card>
-  )
-}
-
 const AddressSection = ({ address }) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>

@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Key } from 'react'
 
 // common
 import { getToggleTheme } from '../../../shared/common/theme'
@@ -53,7 +54,7 @@ const DropDown = () => {
     setTheme(newThemeStr)
   }
 
-  const onClickMenuAction = (actionName) => {
+  const onClickMenuAction = (actionName: Key) => {
     switch (actionName) {
       case 'darkmode':
         toggleTheme()

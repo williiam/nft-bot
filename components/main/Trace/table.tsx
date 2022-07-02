@@ -1,5 +1,7 @@
-import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
+import React from 'react'
 
+
+import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
 import { styled } from '@nextui-org/react';
 import { AiFillHome } from 'react-icons/ai'
 

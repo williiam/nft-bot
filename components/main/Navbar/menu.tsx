@@ -40,7 +40,10 @@ import {
   switchToWallet,
 } from '../../../shared/store/features/section/actions'
 
-export const NavItem = ({ children }) => {
+interface INavItemPropType {
+  children: React.ReactNode
+}
+export const NavItem: React.FC<INavItemPropType>  = ({ children }: INavItemPropType) => {
   return (
     <Card
       id="NavCard"

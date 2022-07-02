@@ -18,6 +18,7 @@ import Router from 'next/router'
 
 // typing
 import { Section } from './';
+import { RootState } from '../../store';
 
 
 const HomeSection : Section = {
@@ -44,7 +45,9 @@ const WalletSection : Section = {
 /**
  * 切換到首頁
  */
-export const switchToHome = createAsyncThunk('section/switch/home', async (payload,thunkAPI) => {
+export const switchToHome = createAsyncThunk<
+{ state: RootState}
+>('section/switch/home', async (payload,thunkAPI) => {
   const { provider } = thunkAPI.getState().web3User;
   
   if(provider) {
