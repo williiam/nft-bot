@@ -12,10 +12,9 @@ import {
 } from '@nextui-org/react'
 
 // redux
-import {  useAppSelector } from '../../../shared/store/hooks';
+import { useAppSelector } from '../../../shared/store/hooks'
 
 export const AppContainer = styled(Container, {
-
   color: '$bc',
   background: '$blue50',
 })
@@ -36,12 +35,14 @@ export const CardButton = styled(Button, {
 })
 
 interface IAddressSectionPropType {
-  address: string | null | undefined;
+  address: string | null | undefined
 }
-const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddressSectionPropType) => {
+const AddressSection: React.FC<IAddressSectionPropType> = ({
+  address,
+}: IAddressSectionPropType) => {
   return (
     <Card css={{ dflex: 'center', pb: '5' }}>
-      <Card.Header css={{ dflex: 'center' }}>
+      {/* <Card.Header css={{ dflex: 'center' }}>
         <Text
           h1
           css={{
@@ -52,7 +53,7 @@ const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddress
         >
           錢包管理
         </Text>
-      </Card.Header>
+      </Card.Header> */}
       <Card.Body>
         <Text
           h3
@@ -121,20 +122,33 @@ const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddress
 }
 
 const Home = () => {
-  const { state } = useAppSelector((state) => state.web3User);
+  const { state } = useAppSelector((state) => state.web3User)
   const { address } = state
 
   return (
     <div>
       <AppContainer css={{ backgroundColor: 'transparent' }}>
-        <AddressSection address={address} />
-        <Spacer y={0.3} />
+          <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
           <Grid xs={12} md={4}>
+            <Text
+              h1
+              css={{
+                fs: '$space$15',
+                textGradient: '45deg, $yellow600 -20%, $red600 100%',
+              }}
+              weight="bold"
+            >
+              錢包管理
+            </Text>
+          </Grid>
+          <Grid xs={12} md={8}>
+          </Grid>
+          <Grid xs={12} md={12}>
+            <AddressSection address={address} />
           </Grid>
           <Grid xs={12} md={4}>
-          </Grid>
-          <Grid xs={12} md={4}>
+
           </Grid>
         </Grid.Container>
       </AppContainer>
