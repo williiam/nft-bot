@@ -38,6 +38,7 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           }}
         >
           <NextUIProvider disableBaseline={true}>
+            
             <Component {...pageProps} />
             <ToastContainer
               hideProgressBar

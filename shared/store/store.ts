@@ -8,10 +8,12 @@ import {
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import web3UserReducer from './features/web3User'
 import sectionReducer from './features/section'
+import traceReducer from './features/trace'
 
 const combinedReducer = combineReducers({
   web3User: web3UserReducer,
   section: sectionReducer,
+  trace: traceReducer
 });
 
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {

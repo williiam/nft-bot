@@ -99,8 +99,8 @@ const Trace: React.FC = () => {
   const { state, isLoggedIn, pending } = useAppSelector(
     (state) => state.web3User
   )
-  const { currentSection, isChanging, error } = useAppSelector(
-    (state) => state.section
+  const { traceWhaleList } = useAppSelector(
+    (state) => state.trace
   )
   const [openAddModal, setOpenAddModal] = React.useState(false)
   // const { provider, web3Provider, address, network } = state
@@ -136,7 +136,7 @@ const Trace: React.FC = () => {
           </Grid>
           <Grid xs={12} md={12}></Grid>
         </Grid.Container>
-        <Table />
+        <Table traceWhaleList={traceWhaleList} />
       </AppContainer>
       <AddModal openAddModal={openAddModal} setOpenAddModal={setOpenAddModal} />
     </div>

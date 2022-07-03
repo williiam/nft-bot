@@ -59,34 +59,51 @@ export const IconButton = styled('button', {
   },
 })
 
-export default function DataTable() {
+export default function DataTable(props) {
+  const { traceWhaleList } = props
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
   const [selectedAddress, setSelectedAddress] = React.useState("")
   const onClickOpenDeleteModal = (address) => {
     setSelectedAddress(address)
     setOpenDeleteModal(true)
   }
-  
+
+  const onClickEtherscanLink = (address) => {
+    window.open(`https://etherscan.io/address/${address}`);
+  }
+
   const columns = [
-    { name: 'Address', uid: 'name' },
+    { name: 'Address', uid: 'address' },
     // { name: "ROLE", uid: "role" },
     { name: 'STATUS', uid: 'status' },
     { name: 'ACTIONS', uid: 'actions' },
   ]
+
+  const renderDataTableData = traceWhaleList.map((traceWhale,index)=>{
+    return(
+      {
+        id: index,
+        address: traceWhale?.address,
+        name: traceWhale?.name,
+        status: 'active',
+        avatar:
+          'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
+      }
+    )
+  })
+
   const users = [
     {
       id: 1,
+      address: 'Tony Reichert',
       name: 'Tony Reichert',
-      role: 'CEO',
-      team: 'Management',
       status: 'active',
-      age: '29',
       avatar:
         'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      email: 'tony.reichert@example.com',
     },
     {
       id: 2,
+      address: 'Zoey Lang',
       name: 'Zoey Lang',
       role: 'Technical Lead',
       team: 'Development',
@@ -98,6 +115,7 @@ export default function DataTable() {
     },
     {
       id: 3,
+      address: 'Jane Fisher',
       name: 'Jane Fisher',
       role: 'Senior Developer',
       team: 'Development',
@@ -136,7 +154,7 @@ export default function DataTable() {
       case 'name':
         return (
           <User squared src={user.avatar} name={cellValue} css={{ p: 0 }}>
-            {/* {user.email} */}
+            {user.email}
           </User>
         )
       case 'role':
@@ -169,7 +187,7 @@ export default function DataTable() {
             </Col> */}
             <Col css={{ d: 'flex' }}>
               <Tooltip content="查看etherscan">
-                <IconButton disabled onClick={() => console.log('Edit user', user.id)}>
+                <IconButton disabled onClick={() =>  onClickEtherscanLink(user.address)} >
                   <AiOutlineLink size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
@@ -178,7 +196,7 @@ export default function DataTable() {
               <Tooltip
                 content="刪除大戶"
                 color="error"
-                onClick={() => onClickOpenDeleteModal(user.id)}
+                onClick={() => onClickOpenDeleteModal(user.address)}
               >
                 <IconButton>
                   <AiFillDelete size={20} fill="#FF0080" />

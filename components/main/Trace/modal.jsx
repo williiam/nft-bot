@@ -1,16 +1,35 @@
 import React from "react";
 import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
 
+// redux
+import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
+import { addTraceWhale } from '../../../shared/store/features/trace/actions'
+
 const AddModal = (props) => {
     const { openAddModal, setOpenAddModal } = props;
+    const [whaleAddress, setWhaleAddress] = React.useState("")
+    const [nickname, setNickname] = React.useState("")
+
+    const dispatch = useAppDispatch()
+
+
     const handler = () => setOpenAddModal(true);
+
+    // const {  } = useAppSelector((state) => state.trace);
 
     const closeHandler = () => {
         setOpenAddModal(false);
     };
 
+    const onClickConfirm = (event) => {
+        dispatch(addTraceWhale({address:whaleAddress,nickname:nickname}));
+        closeHandler();
+    }
+
     return (
-        <div>
+        <div
+        aria-label="add-modal"
+        >
         <Modal
             closeButton
             aria-labelledby="modal-title"
@@ -33,6 +52,21 @@ const AddModal = (props) => {
                 color="primary"
                 size="lg"
                 placeholder="大戶地址"
+                aria-labelledby="add-modal-input-whaleAddress"
+                onChange={event => { setWhaleAddress(event.target.value); }}
+                value={whaleAddress}
+                // contentLeft={<Mail fill="currentColor" />}
+            />
+            <Input
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="大戶暱稱"
+                aria-labelledby="add-modal-input-nickname"
+                onChange={event => { setNickname(event.target.value); }}
+                value={nickname}
                 // contentLeft={<Mail fill="currentColor" />}
             />
             {/* <Row justify="space-between">
@@ -46,7 +80,7 @@ const AddModal = (props) => {
             <Button auto flat color="error" onClick={closeHandler}>
                 取消
             </Button>
-            <Button auto onClick={closeHandler}>
+            <Button auto onClick={onClickConfirm}>
                 新增
             </Button>
             </Modal.Footer>
@@ -57,11 +91,19 @@ const AddModal = (props) => {
 
 const DeleteModal = (props) => {
     const { address, openDeleteModal, setOpenDeleteModal } = props;
+
+    const dispatch = useAppDispatch()
+    
     const handler = () => setOpenDeleteModal(true);
 
     const closeHandler = () => {
         setOpenDeleteModal(false);
     };
+
+    const onClickConfirm = (event) => {
+        dispatch(deleteTraceWhale({address:whaleAddress}));
+        closeHandler();
+    }
 
     return (
         <div>
@@ -88,7 +130,7 @@ const DeleteModal = (props) => {
             <Button auto flat color="error" onClick={closeHandler}>
                 取消
             </Button>
-            <Button auto onClick={closeHandler}>
+            <Button auto onPress={onClickConfirm}>
                 確認
             </Button>
             </Modal.Footer>

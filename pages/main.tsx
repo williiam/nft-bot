@@ -104,9 +104,7 @@ const Main: NextPage = () => {
         }}
       />
       <Spacer y={1} />
-      {/* <AppContainer css={{ backgroundColor: 'transparent' }}> */}
       {renderCurrentSelection()}
-      {/* </AppContainer> */}
     </div>
   )
 }

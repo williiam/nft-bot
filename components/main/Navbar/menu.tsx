@@ -6,7 +6,7 @@ import { Web3Button, Web3Address } from '../..'
 // common
 import { getToggleTheme } from '../../../shared/common/theme'
 
-import React, { useEffect } from 'react'
+import React, { useEffect,useRef } from 'react'
 
 // theme
 import { AiFillHome } from 'react-icons/ai'
@@ -63,7 +63,7 @@ export const NavItem: React.FC<INavItemPropType>  = ({ children }: INavItemPropT
   )
 }
 
-const Menu = () => {
+const Menu = (props) => {
   const { isDark, type } = useTheme()
   const dispatch = useAppDispatch()
   const { state, isLoggedIn, pending } = useAppSelector(
@@ -74,11 +74,30 @@ const Menu = () => {
   )
   // const { provider, web3Provider, address, network } = state
   const router = useRouter()
+  const whaleBtn = useRef(null);
+  const traceBtn = useRef(null);
+  const walletBtn = useRef(null);
+
+  useEffect(() => {
+    switch (currentSection.name) {
+      case "HOME":
+      case "WHALE":
+        whaleBtn?.current?.active;
+      case "TRACE":
+        traceBtn?.current?.active;
+      case "WALLET":
+        walletBtn?.current?.active;
+      default:
+    }
+  
+    return () => {
+    }
+  }, [currentSection])
 
   return (
     <>
       <NavItem>
-        <Button auto color="gradient" ghost css={{ fs: '1', fg: '2' }} onClick={()=>{dispatch(switchToWhale())}} >
+        <Button auto color="gradient" ghost css={{ fs: '1', fg: '2' }} ref={whaleBtn} onClick={()=>{dispatch(switchToWhale())}} >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>
             {'大戶清單'}
           </Text>
@@ -88,6 +107,7 @@ const Menu = () => {
           color="gradient"
           ghost
           css={{ flexShrink: '1', flexGrow: '2' }}
+          ref={traceBtn}
           onClick={()=>{dispatch(switchToTrace())}}
         >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>
@@ -99,6 +119,7 @@ const Menu = () => {
           color="gradient"
           ghost
           css={{ flexShrink: '1', flexGrow: '2' }}
+          ref={walletBtn}
           onClick={()=>{dispatch(switchToWallet())}}
         >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>

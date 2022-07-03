@@ -1,6 +1,5 @@
 // common
-
-import React from 'react'
+import React,{ useEffect, useRef } from 'react'
 
 // theme
 import { AiFillHome } from 'react-icons/ai'
@@ -53,16 +52,38 @@ const NavBar = () => {
   const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
   const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
   // const { provider, web3Provider, address, network } = state
+  const homeBtn = useRef(null);
+  const whaleBtn = useRef(null);
+  const traceBtn = useRef(null);
+  const walletBtn = useRef(null);
   const router = useRouter()
 
+  useEffect(() => {
+    switch (currentSection.name) {
+      case "HOME":
+          homeBtn?.current?.active;
+      case "WHALE":
+        break;
+      case "TRACE":
+        break;
+      case "WALLET":
+        break;
+      default:
+        homeBtn?.current?.active;
+    }
+  
+    return () => {
+    }
+  }, [currentSection])
+  
   return (
     <nav
-      // style={{
-      //   overflow: 'hidden',
-      //   position: 'fixed',
-      //   top: '0px',
-      //   zIndex: '9999',
-      // }}
+      style={{
+        // overflow: 'hidden',
+        position: 'fixed',
+        top: '0px',
+        zIndex: '9999',
+      }}
     >
       <Grid.Container
         gap={0.5}
@@ -90,7 +111,9 @@ const NavBar = () => {
               auto
               color="gradient"
               ghost
-              css={{ flexGrow: '2' }}
+              css={{ 
+                flexGrow: '2',
+              }}
             >
               <AiFillHome />
             </Button>
@@ -104,6 +127,7 @@ const NavBar = () => {
               color="gradient"
               ghost
               css={{ flexGrow: '2' }}
+              ref={homeBtn}
               onClick={(e) => {
                 e.preventDefault()
                 dispatch(switchToHome())
