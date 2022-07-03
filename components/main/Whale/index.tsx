@@ -1,13 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Web3Button, Web3Address } from '../components'
 
 // component
-import NavBar from '../components/main/Navbar/Navbar'
 
 // common
-import { getToggleTheme } from '../shared/common/theme'
 
 // UI
 import {
@@ -164,13 +161,10 @@ const Home = () => {
         </Text>
           </Grid>
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/whales" text="大戶清單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/trace" text="我的跟單" />
           </Grid>
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/wallet" text="錢包管理" />
           </Grid>
         </Grid.Container>
       </AppContainer>

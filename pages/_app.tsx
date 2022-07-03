@@ -11,19 +11,6 @@ import { wrapper } from '../shared/store/store'
 import { Provider as ReduxProvider } from 'react-redux'
 
 // nextUI
-import {
-  css,
-  styled,
-  Container,
-  Grid,
-  Col,
-  Row,
-  Card,
-  Text,
-  Button,
-  Link as LinkContainer,
-  Spacer,
-} from '@nextui-org/react'
 import { NextUIProvider } from '@nextui-org/react'
 
 // nextUI theme
