@@ -100,6 +100,7 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
   const signer = await web3Provider.getSigner()
   const network = await web3Provider.getNetwork()
   const address = await signer.getAddress()
+  Toast.success('get provider DONE')
 
   const postBody:postBody = {
     user: address,
@@ -144,13 +145,14 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
     }
   )
   debugger;
+  Toast.success('AJAX DONE')
 
   if(addTraceWhaleResponse&&addTraceWhaleResponse.success){
     // toast.success('登入NFT.bot 成功');
     // dispatch登入成功(pageFlow)
     // thunkAPI.dispatch(setPageFlow("home"))
     const { result } = addTraceWhaleResponse;
-    Toast.success('新增大戶成沽')
+    Toast.success('新增大戶成功')
     thunkAPI.dispatch(getTraceWhaleList())
   }
 });

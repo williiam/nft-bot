@@ -97,7 +97,7 @@ const DropDown = () => {
               color: '$titleColor',
             }}
           >
-            {address?.slice(0, 7)}...{address?.slice(-6, -1)}
+            {address?.slice(0, 5)}...{address?.slice(-5, -1)}
           </Text>
         </Button>
       </Dropdown.Trigger>
