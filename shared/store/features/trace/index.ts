@@ -51,33 +51,33 @@ export const traceSlice = createSlice({
       })
       .addCase(getTraceWhaleList.fulfilled, (state, { payload }) => {
         // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
-        state.pending = false;
+        // state.pending = false;
       })
       .addCase(getTraceWhaleList.rejected, (state) => {
-        state.pending = false;
-        state.error = true;
+        // state.pending = false;
+        // state.error = true;
       })
       // addTraceWhale
       .addCase(addTraceWhale.pending, (state) => {
-        state.pending = true;
+        // state.pending = true;
       })
       .addCase(addTraceWhale.fulfilled, (state) => {
-        state.pending = false;
+        // state.pending = false;
       })
       .addCase(addTraceWhale.rejected, (state) => {
-        state.pending = false;
-        state.error = true;
+        // state.pending = false;
+        // state.error = true;
       })
       // deleteTraceWhale
       .addCase(deleteTraceWhale.pending, (state) => {
-        state.pending = true;
+        // state.pending = true;
       })
       .addCase(deleteTraceWhale.fulfilled, (state) => {
-        state.pending = false;
+        // state.pending = false;
       })
       .addCase(deleteTraceWhale.rejected, (state) => {
-        state.pending = false;
-        state.error = true;
+        // state.pending = false;
+        // state.error = true;
       });
   },
 });

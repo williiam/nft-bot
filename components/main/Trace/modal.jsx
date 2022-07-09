@@ -22,7 +22,7 @@ const AddModal = (props) => {
     };
 
     const onClickConfirm = (event) => {
-        dispatch(addTraceWhale({address:whaleAddress,nickname:nickname}));
+        dispatch(addTraceWhale({whaleAddress:whaleAddress,nickname:nickname}));
         closeHandler();
     }
 

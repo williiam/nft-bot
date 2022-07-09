@@ -7,14 +7,12 @@ import { ethers } from 'ethers'
 
 // shared
 import { Toast } from '../../../common/toast'
-import toast from 'react-toastify'
+import { toast } from 'react-toastify'
 import API,{postBody} from '../../../common/api'
 
 import { setTraceWhaleList } from './index'
 
 import { logout } from '../web3User/index'
-
-
 
 // router
 import Router from 'next/router'
@@ -24,12 +22,15 @@ import { IProviderInfo } from 'web3modal';
  * 取得追蹤大戶
  */
 export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', async (payload,thunkAPI) => {
+  debugger
   const { provider } = thunkAPI.getState().web3User;
+  debugger;
   if(!provider) {
     console.log("no provider")
-    thunkAPI.dispatch(logout())
-    return
+    await thunkAPI.dispatch(logout())
+    return {success:false}
   }
+  debugger;
   const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
   const signer = await web3Provider.getSigner()
   const address = await signer.getAddress()
@@ -90,12 +91,22 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
  */
  export const addTraceWhale = createAsyncThunk('NFTbot/trace/whale/add', async (payload,thunkAPI) => {
   const { whaleAddress,nickname } = payload;
-  const { provider } = thunkAPI.getState().web3User;
-  if(!provider) {
+  const { provider } = thunkAPI.getState().web3User.state;
+  console.log('thunkAPI.getState() :', thunkAPI.getState());
+
+  debugger;
+
+  if(!provider){
+    if (web3Modal.cachedProvider) {
+      await web3Modal.connect();
+    }
+    
     console.log("no provider")
     thunkAPI.dispatch(logout())
-    return
+    return {success:false}
   }
+  debugger;
+
   const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
   const signer = await web3Provider.getSigner()
   const network = await web3Provider.getNetwork()
@@ -155,6 +166,7 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
     Toast.success('新增大戶成功')
     thunkAPI.dispatch(getTraceWhaleList())
   }
+  return result
 });
 
 /**

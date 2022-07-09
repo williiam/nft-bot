@@ -7,6 +7,7 @@ import { ethers } from 'ethers'
 
 // shared
 import { Toast } from '../../../common/toast'
+import { toast } from 'react-toastify'
 import API,{postBody} from '../../../common/api'
 
 // actions

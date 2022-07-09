@@ -37,6 +37,8 @@ if (typeof window !== 'undefined') {
   })
 }
 
+export class
+
 export const useWeb3 = () => {
   const dispatch = useAppDispatch();
   const { state, isLoggedIn, pending, error } = useAppSelector((state) => state.web3User);
@@ -52,11 +54,10 @@ export const useWeb3 = () => {
   }, [isLoggedIn])
 
   const connect = useCallback(async () => {
-    console.log('web3Modal :', web3Modal);
     if (web3Modal) {
       try {
         const provider = await web3Modal.connect() //metamask , coinbase ...
-        dispatch(login({ type:"web3User/NFTbot/login",provider:provider }));
+        dispatch(login({ provider:provider }));
         console.log('isLoggedIn :', isLoggedIn);
         if(!isLoggedIn){
           // Toast.error('登入NFT.bot失敗');
