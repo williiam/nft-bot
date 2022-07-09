@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import React from 'react'
+import React,{ useEffect, useRef} from 'react'
 // component
 import NavBar from '../components/main/Navbar'
 
@@ -37,6 +37,7 @@ import Home from '../components/main/Home'
 import Whale from '../components/main/Whale'
 import Trace from '../components/main/Trace'
 import Wallet from '../components/main/Wallet'
+import { Toast } from '../shared/common/toast'
 
 export const AppContainer = styled(Container, {
   [`.${darkTheme} &`]: {
@@ -52,7 +53,7 @@ const Main: NextPage = () => {
   const dispatch = useAppDispatch();
   const { state, isLoggedIn, pending, error } = useAppSelector((state) => state.web3User);
   const { currentSection, isChanging } = useAppSelector((state) => state.section);
-  // const { provider, web3Provider, address, network } = state
+  const { provider, web3Provider, address, network } = state
   const router = useRouter()
 
   const renderCurrentSelection:React.FC = () => {
@@ -70,17 +71,28 @@ const Main: NextPage = () => {
       }
   }
 
-  // useEffect(() => {
-  //     // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
-  //     if(!isLoggedIn){
-  //       router.push('./');
-  //     }
+  useEffect(() => {
+      // // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
+      if(!isLoggedIn){
+        router.push('./');
+      }
+
+      if(provider==undefined || provider===null){
+        router.push('./');
+      }
       
-  //     // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
-  //     if(!currentSection){
-  //       router.push('./');
-  //     } 
-  // },[isLoggedIn,currentSection])
+      // 若使用者沒登入，則應踢回index（須在app.tsx設定route規則）
+      if(!currentSection){
+        router.push('./');
+      } 
+
+      if (typeof window !== 'undefined'){
+
+        Toast.error("本網站需要在瀏覽器上執行")
+        // router.push('./');
+
+      }
+  },[isLoggedIn,currentSection])
 
   return (
     <div>

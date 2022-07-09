@@ -74,16 +74,15 @@ export default function DataTable(props) {
 
   const columns = [
     { name: 'Address', uid: 'address' },
-    // { name: "ROLE", uid: "role" },
     { name: 'STATUS', uid: 'status' },
     { name: 'ACTIONS', uid: 'actions' },
   ]
 
-  const renderDataTableData = traceWhaleList.map((traceWhale,index)=>{
+  const dataTableDataSource = traceWhaleList.map((traceWhale,index)=>{
     return(
       {
         id: index,
-        address: traceWhale?.address,
+        address: traceWhale?.walletAddress,
         name: traceWhale?.name,
         status: 'active',
         avatar:
@@ -91,86 +90,14 @@ export default function DataTable(props) {
       }
     )
   })
-
-  const users = [
-    {
-      id: 1,
-      address: 'Tony Reichert',
-      name: 'Tony Reichert',
-      status: 'active',
-      avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-    },
-    {
-      id: 2,
-      address: 'Zoey Lang',
-      name: 'Zoey Lang',
-      role: 'Technical Lead',
-      team: 'Development',
-      status: 'paused',
-      age: '25',
-      avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      email: 'zoey.lang@example.com',
-    },
-    {
-      id: 3,
-      address: 'Jane Fisher',
-      name: 'Jane Fisher',
-      role: 'Senior Developer',
-      team: 'Development',
-      status: 'active',
-      age: '22',
-      avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      email: 'jane.fisher@example.com',
-    },
-    {
-      id: 4,
-      name: 'William Howard',
-      role: 'Community Manager',
-      team: 'Marketing',
-      status: 'vacation',
-      age: '28',
-      avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      email: 'william.howard@example.com',
-    },
-    {
-      id: 5,
-      name: 'Kristen Copper',
-      role: 'Sales Manager',
-      team: 'Sales',
-      status: 'active',
-      age: '24',
-      avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      email: 'kristen.cooper@example.com',
-    },
-  ]
   const renderCell = (user, columnKey) => {
     const cellValue = user[columnKey]
     switch (columnKey) {
-      case 'name':
+      case 'address':
         return (
-          <User squared src={user.avatar} name={cellValue} css={{ p: 0 }}>
-            {user.email}
+          <User squared src={user.avatar} name={user.name} css={{ p: 0 }}>
+            {user.address}
           </User>
-        )
-      case 'role':
-        return (
-          <Col>
-            <Row>
-              <Text b size={14} css={{ tt: 'capitalize' }}>
-                {cellValue}
-              </Text>
-            </Row>
-            <Row>
-              <Text b size={13} css={{ tt: 'capitalize', color: '$accents7' }}>
-                {user.team}
-              </Text>
-            </Row>
-          </Col>
         )
       case 'status':
         return <StyledBadge type={user.status}>{cellValue}</StyledBadge>
@@ -233,7 +160,7 @@ export default function DataTable(props) {
             </Table.Column>
           )}
         </Table.Header>
-        <Table.Body items={users}>
+        <Table.Body items={dataTableDataSource}>
           {(item) => (
             <Table.Row>
               {(columnKey) => (

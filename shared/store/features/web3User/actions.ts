@@ -10,6 +10,8 @@ import { Toast } from '../../../common/toast'
 import { toast } from 'react-toastify'
 import API,{postBody} from '../../../common/api'
 
+import { web3Modal } from '../../../common/Web3Modal';
+
 // actions
 import { setWeb3UserState,resetWeb3UserState,setIsLoggedIn } from './index'
 

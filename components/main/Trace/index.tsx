@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 
 // component
@@ -19,6 +19,7 @@ import {
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks'
+import { getTraceWhaleList } from '../../../shared/store/features/trace/actions'
 
 // router
 import { useRouter } from 'next/router'
@@ -109,6 +110,10 @@ const Trace: React.FC = () => {
   const onClickOpenModal = () => {
     setOpenAddModal(true)
   }
+
+  useEffect(()=>{
+    dispatch(getTraceWhaleList())
+  },[])
 
   return (
     <div>
