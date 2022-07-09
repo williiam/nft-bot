@@ -101,7 +101,7 @@ const DeleteModal = (props) => {
     };
 
     const onClickConfirm = (event) => {
-        dispatch(deleteTraceWhale({address:whaleAddress}));
+        dispatch(deleteTraceWhale({whaleAddress:address}));
         closeHandler();
     }
 

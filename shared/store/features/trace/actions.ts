@@ -268,7 +268,7 @@ export const deleteTraceWhale = createAsyncThunk('NFTbot/trace/whale/delete', as
     // dispatch登入成功(pageFlow)
     // thunkAPI.dispatch(setPageFlow("home"))
     const { result } = deleteTraceWhaleResponse;
-    Toast.success('新增大戶成功')
+    Toast.success('刪除大戶成功')
     thunkAPI.dispatch(getTraceWhaleList())
   }
 });

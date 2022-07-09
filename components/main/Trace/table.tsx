@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Row, Col, Tooltip, User, Text } from '@nextui-org/react'
 import { styled } from '@nextui-org/react'
-import { AiFillHome,AiOutlineLink, AiFillDelete } from 'react-icons/ai'
+import { AiFillHome, AiOutlineLink, AiFillDelete } from 'react-icons/ai'
 import { FiEdit3 } from 'react-icons/fi'
 import { DeleteModal } from './modal'
 
@@ -62,14 +62,16 @@ export const IconButton = styled('button', {
 export default function DataTable(props) {
   const { traceWhaleList } = props
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-  const [selectedAddress, setSelectedAddress] = React.useState("")
+  const [selectedAddress, setSelectedAddress] = React.useState('')
+  
+  const onClickEtherscanLink = (address) => {
+    console.log("ether clicked")
+    window.open(`https://etherscan.io/address/${address}`)
+  }
+  
   const onClickOpenDeleteModal = (address) => {
     setSelectedAddress(address)
     setOpenDeleteModal(true)
-  }
-
-  const onClickEtherscanLink = (address) => {
-    window.open(`https://etherscan.io/address/${address}`);
   }
 
   const columns = [
@@ -78,25 +80,48 @@ export default function DataTable(props) {
     { name: 'ACTIONS', uid: 'actions' },
   ]
 
-  const dataTableDataSource = traceWhaleList.map((traceWhale,index)=>{
-    return(
-      {
-        id: index,
-        address: traceWhale?.walletAddress,
-        name: traceWhale?.name,
-        status: 'active',
-        avatar:
-          'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
-      }
-    )
+  const dataTableDataSource = traceWhaleList.map((traceWhale, index) => {
+    return {
+      id: index,
+      address: traceWhale?.walletAddress,
+      name: traceWhale?.name,
+      status: 'active',
+      avatar:
+        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
+    }
   })
   const renderCell = (user, columnKey) => {
     const cellValue = user[columnKey]
     switch (columnKey) {
       case 'address':
         return (
-          <User squared src={user.avatar} name={user.name} css={{ p: 0 }}>
-            {user.address}
+          <User squared src={user.avatar} css={{
+            p: 0,
+          }}>
+            <Text
+              h3
+              weight="bold"
+              css={{
+                us: 'all',
+                ta: 'left',
+                fs: '$space$10',
+                color: '$layer2',
+              }}
+            >
+              {user.name}
+            </Text>
+            <Text
+              h3
+              weight="bold"
+              css={{
+                us: 'all',
+                ta: 'left',
+                fs: '$space$11',
+                color: '$titleColor',
+              }}
+            >
+              {user.address}
+            </Text>
           </User>
         )
       case 'status':
@@ -114,7 +139,10 @@ export default function DataTable(props) {
             </Col> */}
             <Col css={{ d: 'flex' }}>
               <Tooltip content="查看etherscan">
-                <IconButton disabled onClick={() =>  onClickEtherscanLink(user.address)} >
+                <IconButton
+                  disabled
+                  onClick={() => onClickEtherscanLink(user.walletAddress)}
+                >
                   <AiOutlineLink size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
@@ -170,7 +198,11 @@ export default function DataTable(props) {
           )}
         </Table.Body>
       </Table>
-      <DeleteModal address={selectedAddress} openDeleteModal={openDeleteModal} setOpenDeleteModal={setOpenDeleteModal}/>
+      <DeleteModal
+        address={selectedAddress}
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
+      />
     </>
   )
 }
