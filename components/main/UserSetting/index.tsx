@@ -57,7 +57,7 @@ const SubscribeTokenSection: React.FC<ISubscribeTokenPropType> = ({
         <Card
           variant="bordered"
           css={{
-            maxW: '700px',
+            // maxW: '700px',
             ta: 'center',
             color: '$primary-100',
             bc: '$primary-600',
@@ -68,10 +68,11 @@ const SubscribeTokenSection: React.FC<ISubscribeTokenPropType> = ({
               h1
               weight="bold"
               css={{
+                w:'100%',
                 us: 'all',
                 mt: 0,
                 ta: 'center',
-                fs: '$space12',
+                fs: '$space$10',
                 color: '$titleColor',
               }}
             >

@@ -124,7 +124,7 @@ const Menu = (props) => {
           onClick={()=>{dispatch(switchToWallet())}}
         >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>
-            {'錢包管理'}
+            {'我的錢包'}
           </Text>
         </Button>
         <Button
