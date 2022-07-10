@@ -10,7 +10,7 @@ import { DataToSign } from './types'
 export type postBody = {
   address: string
   user?: string
-  nickname?: string
+  name?: string
   whaleAddress?: string
   network?: string 
 
@@ -30,7 +30,7 @@ const ApiPost = async (url: string, data: DataToSign, signer: any) => {
 
     // TODO: 若連續2次簽署，則除了最後一個皆取消
 
-    // TODO: sign快取
+    // TODO: sign快取 可不可在這裡dispatch 跟 select
 
     const response = await axiosObject({
       method: 'post',

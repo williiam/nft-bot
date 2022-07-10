@@ -10,6 +10,8 @@ import {
   Avatar,
   keyframes,
 } from '@nextui-org/react'
+
+import { Toast } from '../../../shared/common/toast'
 import { styled } from '@nextui-org/react'
 import { AiFillHome, AiOutlineLink, AiFillDelete } from 'react-icons/ai'
 import { FiEdit3 } from 'react-icons/fi'
@@ -71,11 +73,15 @@ export const IconButton = styled('button', {
 
 const xsScaleUp = keyframes({
   '0%': { transform: 'translateX(0%) scale(1)', left: 0, zIndex: '99999' },
-  '50%': { transform: 'translateX(50%) scale(1.5) ', left: 0, zIndex: '99999' },
+  '50%': { transform: 'translateX(10%) scale(1.2) ', left: 0, zIndex: '99999' ,
+  textGradient: '45deg, $yellow600 -20%, $red600 100%',
+
+},
   '100%': {
-    transform: 'translateX(100%) scale(2) rotateY(360deg)',
-    color: 'red',
+    transform: 'translateX(15%) scale(1.2) rotateY(360deg)',
+    textGradient: '45deg, $yellow600 -20%, $red600 100%',
     zIndex: '99999',
+    cursor: 'pointer'
   },
 })
 
@@ -94,14 +100,23 @@ export default function DataTable(props) {
   const { traceWhaleList } = props
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
   const [selectedAddress, setSelectedAddress] = React.useState('')
+  const [selectedNickname, setSelectedNickname] = React.useState('')
+
+  const onClickAddress = (address) => {
+    navigator.clipboard.writeText(address)
+    Toast.success(`${address}地址已複製到剪貼簿`)
+  }
 
   const onClickEtherscanLink = (address) => {
     console.log('ether clicked')
     window.open(`https://etherscan.io/address/${address}`)
   }
 
-  const onClickOpenDeleteModal = (address) => {
+  const onClickOpenDeleteModal = (user) => {
+  console.log('user :', user);
+    const { name, address } = user
     setSelectedAddress(address)
+    setSelectedNickname(name)
     setOpenDeleteModal(true)
   }
 
@@ -115,7 +130,7 @@ export default function DataTable(props) {
   const dataTableDataSource = traceWhaleList.map((traceWhale, index) => {
     return {
       id: index,
-      address: traceWhale?.walletAddress,
+      address: traceWhale?.whaleaddress,
       name: traceWhale?.name,
       status: 'active',
       avatar:
@@ -191,6 +206,7 @@ export default function DataTable(props) {
                     fs: '$space$11',
                   },
                 }}
+                onClick={()=>onClickAddress(user.address)}
               >
                 {user.address}
               </Text>
@@ -207,7 +223,7 @@ export default function DataTable(props) {
             <Col span={12} css={{ d: 'flex' }}>
               <Tooltip content="查看etherscan">
                 <IconButton onClick={() => onClickEtherscanLink(user.address)}>
-                  <AiOutlineLink size={20} fill="#979797" />
+                  <AiOutlineLink size={35} fill="#979797" />
                 </IconButton>
               </Tooltip>
             </Col>
@@ -220,10 +236,10 @@ export default function DataTable(props) {
               <Tooltip
                 content="刪除大戶"
                 color="error"
-                onClick={() => onClickOpenDeleteModal(user.address)}
+                onClick={() => onClickOpenDeleteModal(user)}
               >
                 <IconButton>
-                  <AiFillDelete size={20} fill="#FF0080" />
+                  <AiFillDelete size={35} fill="#FF0080" />
                 </IconButton>
               </Tooltip>
             </Col>
@@ -292,6 +308,7 @@ export default function DataTable(props) {
         </Table.Body>
       </Table>
       <DeleteModal
+        name={selectedNickname}
         address={selectedAddress}
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}

@@ -35,6 +35,9 @@ export const traceSlice = createSlice({
   name: 'traceData',
   initialState,
   reducers: {
+    setPending: (state,action:PayloadAction<[traceWhaleData]>) => {
+      state.pending = action.payload.pending;
+    },
     setTraceWhaleList: (state,action:PayloadAction<[traceWhaleData]>) => {
       console.log('action :', action);
       state.traceWhaleList = action.payload.traceWhaleList;
@@ -47,36 +50,33 @@ export const traceSlice = createSlice({
     builder
       // getTraceWhale
       .addCase(getTraceWhaleList.pending, (state) => {
-        state.pending = true;
       })
       .addCase(getTraceWhaleList.fulfilled, (state, { payload }) => {
         // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
-        // state.pending = false;
+        state.pending = false;
       })
       .addCase(getTraceWhaleList.rejected, (state) => {
-        // state.pending = false;
+        state.pending = false;
         // state.error = true;
       })
       // addTraceWhale
       .addCase(addTraceWhale.pending, (state) => {
-        // state.pending = true;
       })
       .addCase(addTraceWhale.fulfilled, (state) => {
-        // state.pending = false;
+        state.pending = false;
       })
       .addCase(addTraceWhale.rejected, (state) => {
-        // state.pending = false;
+        state.pending = false;
         // state.error = true;
       })
       // deleteTraceWhale
       .addCase(deleteTraceWhale.pending, (state) => {
-        // state.pending = true;
       })
       .addCase(deleteTraceWhale.fulfilled, (state) => {
-        // state.pending = false;
+        state.pending = false;
       })
       .addCase(deleteTraceWhale.rejected, (state) => {
-        // state.pending = false;
+        state.pending = false;
         // state.error = true;
       });
   },
@@ -84,4 +84,4 @@ export const traceSlice = createSlice({
 
 export default traceSlice.reducer;
 
-export const { setTraceWhaleList } = traceSlice.actions
+export const { setTraceWhaleList, setPending } = traceSlice.actions

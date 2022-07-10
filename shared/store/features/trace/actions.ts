@@ -11,7 +11,7 @@ import { Toast } from '../../../common/toast'
 import { toast } from 'react-toastify'
 import API, { postBody } from '../../../common/api'
 
-import { setTraceWhaleList } from './index'
+import { setTraceWhaleList, setPending } from './index'
 
 import { logout } from '../web3User/index'
 
@@ -24,8 +24,15 @@ import { IProviderInfo } from 'web3modal';
  */
 export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', async (payload, thunkAPI) => {
   const { provider } = await thunkAPI.getState().web3User.state;
+  const { pending,error } = await thunkAPI.getState().trace;
   console.log('thunkAPI.getState() :', thunkAPI.getState());
-  console.log('provider :', provider);
+  if(pending) {
+    Toast.info("重複操作,請稍後再試")
+    return;
+  }
+  await thunkAPI.dispatch(setPending({ pending: true }))
+
+  console.log('thunkAPI.getState() :', thunkAPI.getState());
   if (provider == undefined || provider === null) {
     console.log("no provider")
     await thunkAPI.dispatch(logout())
@@ -39,12 +46,14 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
     address
   }
 
+  // TODO: 簽章改在這裡簽，因為要快取
+
   const getTraceWhaleResponse = await toast.promise(
     API.POST('/api/trace/list', postBody, signer),
     {
       pending: {
         render() {
-          return "取得資料中"
+          return "取得大戶追蹤清單中"
         },
         position: "bottom-right",
         hideProgressBar: false,
@@ -65,7 +74,7 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
       error: {
         render({ data }) {
           // When the promise reject, data will contains the error
-          return "取得資料中失敗 🤯"
+          return "取得大戶追蹤清單失敗 🤯"
         },
         position: "bottom-right",
         hideProgressBar: false,
@@ -77,51 +86,11 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
   )
   console.log('getTraceWhaleResponse :', getTraceWhaleResponse);
 
-  if (getTraceWhaleResponse && getTraceWhaleResponse.success) {
-    // toast.success('登入NFT.bot 成功');
-    // dispatch登入成功(pageFlow)
-    // thunkAPI.dispatch(setPageFlow("home"))
-    // const { result } = getTraceWhaleResponse;
-    // 先寫死
-    const result = [
-      {
-        "user": "0x0987654321qwert",
-        "walletAddress": "0x1234567890qwert",
-        "name": "monkey"
-      },
-      {
-        "user": "0x0987654321qwert",
-        "walletAddress": "0x1234567890qwert",
-        "name": "monkeyBoy"
-      },
-      {
-        "user": "0x0987654321qwert",
-        "walletAddress": "0x1234567890qwert",
-        "name": "monkeyGirl"
-      },
-    ]
+  if(getTraceWhaleResponse.status===200&&getTraceWhaleResponse.data.success) {
+    const { result } = getTraceWhaleResponse.data;
     console.log('result :', result);
     thunkAPI.dispatch(setTraceWhaleList({ traceWhaleList: result }))
   }
-  const result = [
-    {
-      "user": "0x0987654321qwert",
-      "walletAddress": "0x1234567890qwert",
-      "name": "monkey"
-    },
-    {
-      "user": "0x0987654321qwert",
-      "walletAddress": "0x1234567890qwert",
-      "name": "monkeyBoy"
-    },
-    {
-      "user": "0x0987654321qwert",
-      "walletAddress": "0x1234567890qwert",
-      "name": "monkeyGirl"
-    },
-  ]
-  console.log('result :', result);
-  thunkAPI.dispatch(setTraceWhaleList({ traceWhaleList: result }))
 });
 
 /**
@@ -146,9 +115,9 @@ export const addTraceWhale = createAsyncThunk('NFTbot/trace/whale/add', async (p
   const address = await signer.getAddress()
 
   const postBody: postBody = {
-    user: address,
-    address: whaleAddress,
-    nickname: nickname ? nickname : ""
+    whaleAddress: whaleAddress,
+    name: nickname ? nickname : "",
+    address: address,
   }
 
   const addTraceWhaleResponse = await toast.promise(
@@ -156,28 +125,18 @@ export const addTraceWhale = createAsyncThunk('NFTbot/trace/whale/add', async (p
     {
       pending: {
         render() {
-          return "取得資料中"
+          return "正在新增大戶"
         },
         position: "bottom-right",
         hideProgressBar: false,
         draggable: true,
         icon: false
       },
-      // success: {
-      //   // render({data}){
-      //   //   return `加入大戶清單成功`
-      //   // },
-      //   position: "bottom-right",
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   icon: "🟢"
-      // },
+  
       error: {
         render({ data }) {
           // When the promise reject, data will contains the error
-          return "取得資料失敗 🤯"
+          return "新增大戶失敗 🤯"
         },
         position: "bottom-right",
         hideProgressBar: false,
@@ -187,7 +146,6 @@ export const addTraceWhale = createAsyncThunk('NFTbot/trace/whale/add', async (p
       }
     }
   )
-  Toast.success('新增跟蹤大戶成功')
 
   if (addTraceWhaleResponse && addTraceWhaleResponse.success) {
     // toast.success('登入NFT.bot 成功');
@@ -219,8 +177,8 @@ export const deleteTraceWhale = createAsyncThunk('NFTbot/trace/whale/delete', as
   const address = await signer.getAddress()
 
   const postBody: postBody = {
-    user: address,
-    address: whaleAddress
+    address: address,
+    whaleAddress: whaleAddress
   }
 
   const deleteTraceWhaleResponse = await toast.promise(
