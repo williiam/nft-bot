@@ -25,13 +25,25 @@ const axiosObject = axios.create({
 
 const ApiPost = async (url: string, data: DataToSign, signer: any) => {
   try {
-    // const adress = await signer.getAddress();
-    const signature: string = await signer.signMessage( JSON.stringify(data))
+    const adress = await signer.getAddress();
 
-    // TODO: 若連續2次簽署，則除了最後一個皆取消
+    let jsonStringifiedData = JSON.stringify(data);
+    let signature=window.localStorage.getItem(jsonStringifiedData)
+    console.log('signature :', signature);
+    if(signature === null ) {
+      signature = await signer.signMessage( jsonStringifiedData)
+      window.localStorage.setItem(jsonStringifiedData,signature);
+    }
 
-    // TODO: sign快取 可不可在這裡dispatch 跟 select
-
+    console.log(`      data: {
+      // 這格就是body
+      ...data,
+      signature
+    }, :`,        {
+      // 這格就是body
+      ...data,
+      signature
+    },);
     const response = await axiosObject({
       method: 'post',
       url: url,

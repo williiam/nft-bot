@@ -1,3 +1,4 @@
+// node_module 
 import React from 'react'
 import {
   Modal,
@@ -8,6 +9,8 @@ import {
   Checkbox,
   Spacer,
 } from '@nextui-org/react'
+import { ethers } from 'ethers'
+import { toast } from 'react-toastify'
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks'
@@ -15,6 +18,9 @@ import {
   addTraceWhale,
   deleteTraceWhale,
 } from '../../../shared/store/features/trace/actions'
+
+// shared
+import { Toast } from '../../../shared/common/toast'
 
 const AddModal = (props) => {
   const { openAddModal, setOpenAddModal } = props
@@ -29,44 +35,69 @@ const AddModal = (props) => {
 
   const closeHandler = () => {
     setOpenAddModal(false)
+    setWhaleAddress("")
+    setNickname("")
   }
 
-  const onClickConfirm = (event) => {
-    dispatch(addTraceWhale({ whaleAddress: whaleAddress, nickname: nickname }))
-    closeHandler()
+  const onClickConfirm = (event) => {}
+
+  const onSubmitForm = (e) => {
+    e.preventDefault()
+    if(ethers.utils.isAddress(whaleAddress)){
+        dispatch(addTraceWhale({ whaleAddress: whaleAddress, nickname: nickname }))
+        closeHandler()
+    }
+    else{
+        toast.warn('此地址不存在', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
   }
+
+
+  // TODO: 表單需為必填,且需驗證地址格式
 
   return (
     <div aria-label="add-modal">
       <Modal
         closeButton
         aria-labelledby="modal-title"
+        blur={false}
+        css={{
+            backdropFilter: 'none'
+          }}
         open={openAddModal}
         onClose={closeHandler}
       >
-        <Modal.Header>
-          <Text
-            id="modal-title"
-            css={{
-              fs: '$space$15',
-              textGradient: '45deg, $yellow600 -20%, $red600 100%',
-            }}
-          >
-            新增
+        <form onSubmit={onSubmitForm}>
+          <Modal.Header>
             <Text
-              b
-              size={18}
+              id="modal-title"
               css={{
                 fs: '$space$15',
                 textGradient: '45deg, $yellow600 -20%, $red600 100%',
               }}
             >
-              大戶
+              新增
+              <Text
+                b
+                size={18}
+                css={{
+                  fs: '$space$15',
+                  textGradient: '45deg, $yellow600 -20%, $red600 100%',
+                }}
+              >
+                大戶
+              </Text>
             </Text>
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
+          </Modal.Header>
+          <Modal.Body>
             <Input
               clearable
               bordered
@@ -76,6 +107,10 @@ const AddModal = (props) => {
               label="大戶暱稱"
               placeholder="大戶暱稱"
               aria-labelledby="add-modal-input-nickname"
+              css={{
+                lineHeight: '$lg',
+                fs: '$space$15',
+              }}
               required
               onChange={(event) => {
                 setNickname(event.target.value)
@@ -83,7 +118,7 @@ const AddModal = (props) => {
               value={nickname}
               // contentLeft={<Mail fill="currentColor" />}
             />
-            <Spacer y={1} />
+            <Spacer y={0} />
             <Input
               clearable
               bordered
@@ -100,32 +135,32 @@ const AddModal = (props) => {
               value={whaleAddress}
               // contentLeft={<Mail fill="currentColor" />}
             />
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={closeHandler}>
-            <Text
-              b
-              size={18}
-              css={{
-                fs: '$space$10',
-              }}
-            >
-              取消
-            </Text>
-          </Button>
-          <Button auto onClick={onClickConfirm}>
-            <Text
-              b
-              size={18}
-              css={{
-                fs: '$space$10',
-              }}
-            >
-              新增
-            </Text>
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button auto flat color="error" onClick={closeHandler}>
+              <Text
+                b
+                size={18}
+                css={{
+                  fs: '$space$10',
+                }}
+              >
+                取消
+              </Text>
+            </Button>
+            <Button auto type="submit">
+              <Text
+                b
+                size={18}
+                css={{
+                  fs: '$space$10',
+                }}
+              >
+                新增
+              </Text>
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
     </div>
   )
@@ -156,7 +191,7 @@ const DeleteModal = (props) => {
         onClose={closeHandler}
       >
         <Modal.Header>
-        <Text
+          <Text
             id="modal-title"
             css={{
               fs: '$space$13',
@@ -170,10 +205,8 @@ const DeleteModal = (props) => {
           <Text b size={18}>
             {name}
           </Text>
-          <Spacer y={0.1}/>
-          <Text  size={18}>
-            {address}
-          </Text>
+          <Spacer y={0.1} />
+          <Text size={18}>{address}</Text>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onClick={closeHandler}>

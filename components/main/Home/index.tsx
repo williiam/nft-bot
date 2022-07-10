@@ -126,7 +126,7 @@ const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddress
           }}
           weight="bold"
         >
-          我的錢包地址
+          我的登入地址
         </Text>
         <Card
           variant="bordered"
@@ -150,31 +150,6 @@ const AddressSection: React.FC<IAddressSectionPropType> = ({ address }: IAddress
               }}
             >
               {address}
-            </Text>
-          </Card.Body>
-        </Card>
-        <Card
-          variant="bordered"
-          css={{
-            maxW: '400px',
-            mt: '$8',
-            ta: 'center',
-            color: '$primary-100',
-            bc: '$primary-600',
-          }}
-        >
-          <Card.Body>
-            <Text
-              h1
-              weight="bold"
-              css={{
-                us: 'all',
-                ta: 'left',
-                fs: '$space$9',
-                color: '$titleColor',
-              }}
-            >
-              餘額：{address}
             </Text>
           </Card.Body>
         </Card>

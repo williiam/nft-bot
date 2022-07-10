@@ -187,6 +187,7 @@ export default function DataTable(props) {
                   wordWrap: 'break-word',
                   zIndex: '2147483647',
                   overflow: 'visible',
+                  cursor: 'pointer',
                   '@xs': {
                     fs: '$space$8',
                     '&:hover': {

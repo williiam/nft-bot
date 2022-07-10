@@ -40,10 +40,12 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
   }
   const web3Provider = new ethers.providers.Web3Provider(provider) // 該供應商的library
   const signer = await web3Provider.getSigner()
+  const network = await web3Provider.getNetwork()
   const address = await signer.getAddress()
 
   const postBody: postBody = {
-    address
+    address,
+    network: network.name
   }
 
   // TODO: 簽章改在這裡簽，因為要快取
@@ -61,9 +63,9 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
         icon: false
       },
       success: {
-        // render({data}){
-        //   return `登入NFT.bot成功`
-        // },
+        render({data}){
+          return `取得大戶追蹤清單成功`
+        },
         position: "bottom-right",
         hideProgressBar: false,
         closeOnClick: true,
