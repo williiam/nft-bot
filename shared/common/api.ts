@@ -30,6 +30,8 @@ const ApiPost = async (url: string, data: DataToSign, signer: any) => {
 
     // TODO: 若連續2次簽署，則除了最後一個皆取消
 
+    // TODO: sign快取
+
     const response = await axiosObject({
       method: 'post',
       url: url,
