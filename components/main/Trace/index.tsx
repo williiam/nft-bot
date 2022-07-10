@@ -64,7 +64,7 @@ export const ActionCardItem: React.FC<IActionCardItemPropType> = (
         textAlign: 'center',
         justifyContent: 'center',
         w: '100%',
-        h: '$18',
+        h: '$14',
         justyContent: 'center',
         color: '$primary1',
         bc: '$layer9',
@@ -78,10 +78,10 @@ export const ActionCardItem: React.FC<IActionCardItemPropType> = (
       <Text
         id="text"
         h3
-        size={30}
+        // size={30}
         css={{
           mt: 0,
-          fs: '$space$11',
+          fs: '$space$10',
           textAlign: 'center',
           color: '$titleColor',
           '&:hover': {
@@ -132,14 +132,13 @@ const Trace: React.FC = () => {
               我的跟單
             </Text>
           </Grid>
-          <Grid xs={12} md={3}>
+          <Grid xs={12} md={3} justify="center" alignItems="center">
             <ActionCardItem onClickAction={onClickOpenModal} text="新增" />
           </Grid>
           <Grid xs={12} md={6}>
             {/* <AddressSection address={'test'} /> */}
             {/* <ActionCardItem url="/wallet" text="新增" /> */}
           </Grid>
-          <Grid xs={12} md={12}></Grid>
         </Grid.Container>
         <Table traceWhaleList={traceWhaleList} />
       </AppContainer>

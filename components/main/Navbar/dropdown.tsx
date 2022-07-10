@@ -7,6 +7,7 @@ import { Key } from 'react'
 import { getToggleTheme } from '../../../shared/common/theme'
 
 import React, { useEffect } from 'react'
+import web3Modal from '../../../shared/common/Web3Modal'
 
 // theme
 import { useTheme as useNextTheme } from 'next-themes'
@@ -39,9 +40,9 @@ import { useWeb3 } from '../../../shared/hooks/Web3User'
 
 const DropDown = () => {
   const { isDark, type } = useTheme()
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const { disconnect } = useWeb3()
-  const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User);
+  const { state, isLoggedIn, pending } = useAppSelector((state) => state.web3User)
   const { currentSection, isChanging, error } = useAppSelector((state) => state.section);
   const { provider, web3Provider, address, network } = state
   const { theme, setTheme } = useNextTheme()
@@ -49,9 +50,10 @@ const DropDown = () => {
   const nowTheme = themeSetting.theme
   const router = useRouter()
 
-  const toggleTheme = () => {
+  const toggleTheme = async () => {
     const newThemeStr = getToggleTheme(theme)
     setTheme(newThemeStr)
+    await web3Modal?.updateTheme(newThemeStr)
   }
 
   const onClickMenuAction = (actionName: Key) => {

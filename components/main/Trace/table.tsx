@@ -1,5 +1,15 @@
 import React from 'react'
-import { Table, Row, Col, Tooltip, User, Text } from '@nextui-org/react'
+import {
+  Grid,
+  Table,
+  Row,
+  Col,
+  Tooltip,
+  User,
+  Text,
+  Avatar,
+  keyframes
+} from '@nextui-org/react'
 import { styled } from '@nextui-org/react'
 import { AiFillHome, AiOutlineLink, AiFillDelete } from 'react-icons/ai'
 import { FiEdit3 } from 'react-icons/fi'
@@ -59,16 +69,34 @@ export const IconButton = styled('button', {
   },
 })
 
+const xsScaleUp = keyframes({
+  '0%': { transform: 'translateX(0%) scale(1)',left: 0 ,zIndex:'99999'  },
+  '50%': { transform: 'translateX(50%) scale(1.5) ',left: 0 ,zIndex:'99999'  },
+  '100%': { transform: 'translateX(100%) scale(2) rotateY(360deg)',color: 'red', zIndex:'99999' }
+});
+
+const scaleUp = keyframes({
+  '0%': { transform: 'scale(1)' },
+  '100%': { transform: 'scale(1)' }
+});
+
+const StyledText = styled(Text, {
+  '&:hover': {
+    animation: `${scaleUp} 5s`
+  }
+});
+
+
 export default function DataTable(props) {
   const { traceWhaleList } = props
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
   const [selectedAddress, setSelectedAddress] = React.useState('')
-  
+
   const onClickEtherscanLink = (address) => {
-    console.log("ether clicked")
+    console.log('ether clicked')
     window.open(`https://etherscan.io/address/${address}`)
   }
-  
+
   const onClickOpenDeleteModal = (address) => {
     setSelectedAddress(address)
     setOpenDeleteModal(true)
@@ -76,8 +104,9 @@ export default function DataTable(props) {
 
   const columns = [
     { name: 'Address', uid: 'address' },
-    { name: 'STATUS', uid: 'status' },
-    { name: 'ACTIONS', uid: 'actions' },
+    // { name: 'STATUS', uid: 'status' },
+    { name: '連結', uid: 'link' },
+    { name: '刪除', uid: 'delete' },
   ]
 
   const dataTableDataSource = traceWhaleList.map((traceWhale, index) => {
@@ -95,58 +124,97 @@ export default function DataTable(props) {
     switch (columnKey) {
       case 'address':
         return (
-          <User squared src={user.avatar} css={{
-            p: 0,
-          }}>
+          <>
+          <User
+            squared
+            size="sm"
+            src={user.avatar}
+            css={{
+              p: 0,
+              zIndex: '-1',
+            }}
+          >
             <Text
               h3
               weight="bold"
               css={{
                 us: 'all',
                 ta: 'left',
-                fs: '$space$10',
+                display: 'inline-block',
                 color: '$layer2',
+                '@xs': {
+                  fs: '$space$8',
+                },
+                '@sm': {
+                  fs: '$space$9',
+                },
+                '@md': {
+                  fs: '$space$10',
+                },
+                '@lg': {
+                  fs: '$space$10',
+                },
               }}
             >
               {user.name}
             </Text>
-            <Text
-              h3
-              weight="bold"
-              css={{
-                us: 'all',
-                ta: 'left',
-                fs: '$space$11',
-                color: '$titleColor',
-              }}
-            >
-              {user.address}
-            </Text>
+            {/* <Tooltip content={user.address}> */}
+              <Text
+                h3
+                weight="bold"
+                css={{
+                  us: 'all',
+                  ta: 'left',
+                  color: '$titleColor',
+                  wordWrap: 'break-word',
+                  zIndex: '2147483647',
+                  overflow:'visible',
+                  '@xs': {
+                    fs: '$space$8',
+                    '&:hover': {
+                      animation: `${xsScaleUp} 1s forwards`
+                    },
+                  },
+                  '@sm': {
+                    fs: '$space$9',
+                    '&:hover': {
+                      // animation: `${scaleUp} 5s`
+                    },
+                  },
+                  '@md': {
+                    fs: '$space$10',
+                  },
+                  '@lg': {
+                    fs: '$space$11',
+                  },
+                }}
+              >
+                {user.address}
+              </Text>
+            {/* </Tooltip> */}
           </User>
+          </>
         )
       case 'status':
         return <StyledBadge type={user.status}>{cellValue}</StyledBadge>
 
-      case 'actions':
+      case 'link':
         return (
           <Row justify="center" align="center">
-            {/* <Col css={{ d: "flex" }}>
-              <Tooltip content="Details">
-                <IconButton onClick={() => console.log("View user", user.id)}>
-                  <AiFillHome size={20} fill="#979797" />
-                </IconButton>
-              </Tooltip>
-            </Col> */}
             <Col css={{ d: 'flex' }}>
               <Tooltip content="查看etherscan">
                 <IconButton
-                  disabled
-                  onClick={() => onClickEtherscanLink(user.walletAddress)}
+                  onClick={() => onClickEtherscanLink(user.address)}
                 >
                   <AiOutlineLink size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
             </Col>
+          </Row>
+        )
+      case 'delete':
+        return (
+          <Row justify="center" align="center">
             <Col css={{ d: 'flex' }}>
               <Tooltip
                 content="刪除大戶"
@@ -182,6 +250,7 @@ export default function DataTable(props) {
             <Table.Column
               key={column.uid}
               hideHeader={column.uid === 'actions'}
+              // align={column.uid === 'actions' ? 'center' : 'start'}
               align={column.uid === 'actions' ? 'center' : 'start'}
             >
               {column.name}

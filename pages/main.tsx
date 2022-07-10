@@ -37,6 +37,7 @@ import Home from '../components/main/Home'
 import Whale from '../components/main/Whale'
 import Trace from '../components/main/Trace'
 import Wallet from '../components/main/Wallet'
+import UserSetting from '../components/main/UserSetting'
 import { Toast } from '../shared/common/toast'
 
 export const AppContainer = styled(Container, {
@@ -66,6 +67,8 @@ const Main: NextPage = () => {
               return <Trace/>;
         case "WALLET":
           return <Wallet/>;
+        case "USER_SETTING":
+          return <UserSetting/>;
         default:
           return <Home/>;
       }
@@ -86,7 +89,7 @@ const Main: NextPage = () => {
         router.push('./');
       } 
 
-      if (typeof window !== 'undefined'){
+      if (typeof window === 'undefined'){
 
         Toast.error("本網站需要在瀏覽器上執行")
         // router.push('./');

@@ -9,10 +9,10 @@ import { ethers } from 'ethers'
 import type { RootState } from '../../store';
 
 // actions
-import { switchToHome,switchToWhale,switchToTrace,switchToWallet } from './actions';
+import { switchToHome,switchToWhale,switchToTrace,switchToWallet,switchToUserSetting } from './actions';
 
 export type Section = {
-  name: 'HOME'|'WHALE'|'TRACE'|'WALLET',
+  name: 'HOME'|'WHALE'|'TRACE'|'WALLET'|'USER_SETTING',
   permission: 'REQUIRED_LOGIN' | 'PUBLIC'
   config?: any | undefined | null
 } 
@@ -68,6 +68,12 @@ export const sectionSlice = createSlice({
     .addCase(switchToWallet.fulfilled, (state, { payload }) => {
     })
     .addCase(switchToWallet.rejected, (state) => {
+    })
+    .addCase(switchToUserSetting.pending, (state) => {
+    })
+    .addCase(switchToUserSetting.fulfilled, (state, { payload }) => {
+    })
+    .addCase(switchToUserSetting.rejected, (state) => {
     })
   }
 });

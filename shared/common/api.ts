@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from '../common/toast'
 import { DataToSign } from './types'
 
 // declare type postBody = {
@@ -26,6 +27,8 @@ const ApiPost = async (url: string, data: DataToSign, signer: any) => {
   try {
     // const adress = await signer.getAddress();
     const signature: string = await signer.signMessage( JSON.stringify(data))
+    // TODO: 若使用者選擇不簽署，則顯示簽署失敗並且不執行AJAX
+
     const response = await axiosObject({
       method: 'post',
       url: url,
@@ -38,6 +41,8 @@ const ApiPost = async (url: string, data: DataToSign, signer: any) => {
     return response
   } catch (e) {
     console.log('e :', e)
+    Toast.error("拒絕簽署訊息")
+    throw e;
   }
 }
 

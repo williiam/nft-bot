@@ -3,7 +3,7 @@ import { Modal, Button, Text, Input, Row, Checkbox } from "@nextui-org/react";
 
 // redux
 import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
-import { addTraceWhale } from '../../../shared/store/features/trace/actions'
+import { addTraceWhale, deleteTraceWhale } from '../../../shared/store/features/trace/actions'
 
 const AddModal = (props) => {
     const { openAddModal, setOpenAddModal } = props;

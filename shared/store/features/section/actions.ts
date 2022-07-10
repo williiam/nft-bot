@@ -41,6 +41,11 @@ const WalletSection : Section = {
   permission: 'REQUIRED_LOGIN',
   config: {}
 }
+const UserSettingSection : Section = {
+  name: 'USER_SETTING',
+  permission: 'REQUIRED_LOGIN',
+  config: {}
+}
 
 /**
  * 切換到首頁
@@ -98,4 +103,17 @@ export const switchToWallet = createAsyncThunk('section/switch/wallet', async (p
   }
 
   thunkAPI.dispatch(setCurrentSection({selectedSection:WalletSection}))
+});
+
+/**
+ * 切換到使用者設定
+ */
+export const switchToUserSetting = createAsyncThunk('section/switch/userSetting', async (payload,thunkAPI) => {
+  const { provider } = thunkAPI.getState().web3User;
+  
+  if(provider) {
+    // TODO >>> 取得最新資料，因為web3Modal回傳的provider可以設定onXXX事件，好像不用重抓
+  }
+
+  thunkAPI.dispatch(setCurrentSection({selectedSection:UserSettingSection}))
 });

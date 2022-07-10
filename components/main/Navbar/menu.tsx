@@ -38,6 +38,7 @@ import {
   switchToWhale,
   switchToTrace,
   switchToWallet,
+  switchToUserSetting
 } from '../../../shared/store/features/section/actions'
 
 interface INavItemPropType {
@@ -97,11 +98,11 @@ const Menu = (props) => {
   return (
     <>
       <NavItem>
-        <Button auto color="gradient" ghost css={{ fs: '1', fg: '2' }} ref={whaleBtn} onClick={()=>{dispatch(switchToWhale())}} >
+        {/* <Button auto color="gradient" ghost css={{ fs: '1', fg: '2' }} ref={whaleBtn} onClick={()=>{dispatch(switchToWhale())}} >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>
             {'大戶清單'}
           </Text>
-        </Button>
+        </Button> */}
         <Button
           auto
           color="gradient"
@@ -124,6 +125,18 @@ const Menu = (props) => {
         >
           <Text css={{ fs: '$space$9', color: '$fontColor' }}>
             {'錢包管理'}
+          </Text>
+        </Button>
+        <Button
+          auto
+          color="gradient"
+          ghost
+          css={{ flexShrink: '1', flexGrow: '2' }}
+          ref={walletBtn}
+          onClick={()=>{dispatch(switchToUserSetting())}}
+        >
+          <Text css={{ fs: '$space$9', color: '$fontColor' }}>
+            {'訂閱telegram通知'}
           </Text>
         </Button>
       </NavItem>
