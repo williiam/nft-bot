@@ -55,7 +55,7 @@ export const useWeb3 = () => {
       if (provider?.disconnect && typeof provider.disconnect === 'function') {
         await provider.disconnect()
       }
-      toast.error('Disconnected from Web3')
+      Toast.error('Disconnected from Web3')
       dispatch(logout());
     } else {
       console.error('No Web3Modal')
@@ -73,7 +73,7 @@ export const useWeb3 = () => {
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = async (accounts: string[]) => {
-        toast.info('Changed Web3 Account')
+        Toast.info('Changed Web3 Account')
         dispatch(logout());
       }
 
@@ -81,7 +81,7 @@ export const useWeb3 = () => {
       const handleChainChanged = (_hexChainId: string) => {
         if (typeof window !== 'undefined') {
           console.log('switched to chain...', _hexChainId)
-          toast.info('Web3 Network Changed')
+          Toast.info('Web3 Network Changed')
           dispatch(logout());
           window.location.assign(window.location.origin);
         } else {

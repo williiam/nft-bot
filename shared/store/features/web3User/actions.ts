@@ -32,7 +32,7 @@ export const login = createAsyncThunk('NFTbot/login', async (payload: { provider
   const signer = await web3Provider.getSigner()
   const network = await web3Provider.getNetwork()
   const address = await signer.getAddress()
-  Toast.success('Connected to Web3')
+  Toast.success('已連線到Web3')
 
   const postBody: postBody = {
     address,

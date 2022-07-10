@@ -158,7 +158,7 @@ const LandingPage: NextPage = () => {
         <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
           <Grid xs={12} md={4}>
-            <LinkCardItem url="/main" text="查看UI" />
+            {/* <LinkCardItem url="/main" text="查看UI" /> */}
           </Grid>
         </Grid.Container>
       </AppContainer>
