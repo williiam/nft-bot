@@ -39,70 +39,70 @@ export const getTraceWhaleList = createAsyncThunk('NFTbot/trace/whale/get', asyn
     address
   }
 
-  // const getTraceWhaleResponse = await toast.promise(
-  //   API.POST('/api/trace/list', postBody, signer),
-  //   {
-  //     pending: {
-  //       render() {
-  //         return "取得資料中"
-  //       },
-  //       position: "bottom-right",
-  //       hideProgressBar: false,
-  //       draggable: true,
-  //       icon: false
-  //     },
-  //     success: {
-  //       // render({data}){
-  //       //   return `登入NFT.bot成功`
-  //       // },
-  //       position: "bottom-right",
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       icon: "🟢"
-  //     },
-  //     error: {
-  //       render({ data }) {
-  //         // When the promise reject, data will contains the error
-  //         return "取得資料中失敗 🤯"
-  //       },
-  //       position: "bottom-right",
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //     }
-  //   }
-  // )
-  // console.log('getTraceWhaleResponse :', getTraceWhaleResponse);
+  const getTraceWhaleResponse = await toast.promise(
+    API.POST('/api/trace/list', postBody, signer),
+    {
+      pending: {
+        render() {
+          return "取得資料中"
+        },
+        position: "bottom-right",
+        hideProgressBar: false,
+        draggable: true,
+        icon: false
+      },
+      success: {
+        // render({data}){
+        //   return `登入NFT.bot成功`
+        // },
+        position: "bottom-right",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        icon: "🟢"
+      },
+      error: {
+        render({ data }) {
+          // When the promise reject, data will contains the error
+          return "取得資料中失敗 🤯"
+        },
+        position: "bottom-right",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      }
+    }
+  )
+  console.log('getTraceWhaleResponse :', getTraceWhaleResponse);
 
-  // if (getTraceWhaleResponse && getTraceWhaleResponse.success) {
-  //   // toast.success('登入NFT.bot 成功');
-  //   // dispatch登入成功(pageFlow)
-  //   // thunkAPI.dispatch(setPageFlow("home"))
-  //   // const { result } = getTraceWhaleResponse;
-  //   // 先寫死
-  //   const result = [
-  //     {
-  //       "user": "0x0987654321qwert",
-  //       "walletAddress": "0x1234567890qwert",
-  //       "name": "monkey"
-  //     },
-  //     {
-  //       "user": "0x0987654321qwert",
-  //       "walletAddress": "0x1234567890qwert",
-  //       "name": "monkeyBoy"
-  //     },
-  //     {
-  //       "user": "0x0987654321qwert",
-  //       "walletAddress": "0x1234567890qwert",
-  //       "name": "monkeyGirl"
-  //     },
-  //   ]
-  //   console.log('result :', result);
-  //   thunkAPI.dispatch(setTraceWhaleList({ traceWhaleList: result }))
-  // }
+  if (getTraceWhaleResponse && getTraceWhaleResponse.success) {
+    // toast.success('登入NFT.bot 成功');
+    // dispatch登入成功(pageFlow)
+    // thunkAPI.dispatch(setPageFlow("home"))
+    // const { result } = getTraceWhaleResponse;
+    // 先寫死
+    const result = [
+      {
+        "user": "0x0987654321qwert",
+        "walletAddress": "0x1234567890qwert",
+        "name": "monkey"
+      },
+      {
+        "user": "0x0987654321qwert",
+        "walletAddress": "0x1234567890qwert",
+        "name": "monkeyBoy"
+      },
+      {
+        "user": "0x0987654321qwert",
+        "walletAddress": "0x1234567890qwert",
+        "name": "monkeyGirl"
+      },
+    ]
+    console.log('result :', result);
+    thunkAPI.dispatch(setTraceWhaleList({ traceWhaleList: result }))
+  }
   const result = [
     {
       "user": "0x0987654321qwert",
@@ -148,7 +148,7 @@ export const addTraceWhale = createAsyncThunk('NFTbot/trace/whale/add', async (p
   const postBody: postBody = {
     user: address,
     address: whaleAddress,
-    nikename: nickname ? nickname : ""
+    nickname: nickname ? nickname : ""
   }
 
   const addTraceWhaleResponse = await toast.promise(

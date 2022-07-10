@@ -51,10 +51,10 @@ const AddModal = (props) => {
                 fullWidth
                 color="primary"
                 size="lg"
-                placeholder="大戶地址"
-                aria-labelledby="add-modal-input-whaleAddress"
-                onChange={event => { setWhaleAddress(event.target.value); }}
-                value={whaleAddress}
+                placeholder="大戶暱稱"
+                aria-labelledby="add-modal-input-nickname"
+                onChange={event => { setNickname(event.target.value); }}
+                value={nickname}
                 // contentLeft={<Mail fill="currentColor" />}
             />
             <Input
@@ -63,18 +63,12 @@ const AddModal = (props) => {
                 fullWidth
                 color="primary"
                 size="lg"
-                placeholder="大戶暱稱"
-                aria-labelledby="add-modal-input-nickname"
-                onChange={event => { setNickname(event.target.value); }}
-                value={nickname}
+                placeholder="大戶地址"
+                aria-labelledby="add-modal-input-whaleAddress"
+                onChange={event => { setWhaleAddress(event.target.value); }}
+                value={whaleAddress}
                 // contentLeft={<Mail fill="currentColor" />}
             />
-            {/* <Row justify="space-between">
-                <Checkbox>
-                <Text size={14}>Remember me</Text>
-                </Checkbox>
-                <Text size={14}>Forgot password?</Text>
-            </Row> */}
             </Modal.Body>
             <Modal.Footer>
             <Button auto flat color="error" onClick={closeHandler}>

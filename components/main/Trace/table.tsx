@@ -8,7 +8,7 @@ import {
   User,
   Text,
   Avatar,
-  keyframes
+  keyframes,
 } from '@nextui-org/react'
 import { styled } from '@nextui-org/react'
 import { AiFillHome, AiOutlineLink, AiFillDelete } from 'react-icons/ai'
@@ -70,22 +70,25 @@ export const IconButton = styled('button', {
 })
 
 const xsScaleUp = keyframes({
-  '0%': { transform: 'translateX(0%) scale(1)',left: 0 ,zIndex:'99999'  },
-  '50%': { transform: 'translateX(50%) scale(1.5) ',left: 0 ,zIndex:'99999'  },
-  '100%': { transform: 'translateX(100%) scale(2) rotateY(360deg)',color: 'red', zIndex:'99999' }
-});
+  '0%': { transform: 'translateX(0%) scale(1)', left: 0, zIndex: '99999' },
+  '50%': { transform: 'translateX(50%) scale(1.5) ', left: 0, zIndex: '99999' },
+  '100%': {
+    transform: 'translateX(100%) scale(2) rotateY(360deg)',
+    color: 'red',
+    zIndex: '99999',
+  },
+})
 
 const scaleUp = keyframes({
   '0%': { transform: 'scale(1)' },
-  '100%': { transform: 'scale(1)' }
-});
+  '100%': { transform: 'scale(1)' },
+})
 
 const StyledText = styled(Text, {
   '&:hover': {
-    animation: `${scaleUp} 5s`
-  }
-});
-
+    animation: `${scaleUp} 5s`,
+  },
+})
 
 export default function DataTable(props) {
   const { traceWhaleList } = props
@@ -103,7 +106,7 @@ export default function DataTable(props) {
   }
 
   const columns = [
-    { name: 'Address', uid: 'address' },
+    { name: '地址', uid: 'address' },
     // { name: 'STATUS', uid: 'status' },
     { name: '連結', uid: 'link' },
     { name: '刪除', uid: 'delete' },
@@ -125,40 +128,40 @@ export default function DataTable(props) {
       case 'address':
         return (
           <>
-          <User
-            squared
-            size="sm"
-            src={user.avatar}
-            css={{
-              p: 0,
-              zIndex: '-1',
-            }}
-          >
-            <Text
-              h3
-              weight="bold"
+            <User
+              squared
+              size="md"
+              src={user.avatar}
               css={{
-                us: 'all',
-                ta: 'left',
-                display: 'inline-block',
-                color: '$layer2',
-                '@xs': {
-                  fs: '$space$8',
-                },
-                '@sm': {
-                  fs: '$space$9',
-                },
-                '@md': {
-                  fs: '$space$10',
-                },
-                '@lg': {
-                  fs: '$space$10',
-                },
+                p: 0,
+                zIndex: '-1',
               }}
             >
-              {user.name}
-            </Text>
-            {/* <Tooltip content={user.address}> */}
+              <Text
+                h3
+                weight="bold"
+                css={{
+                  us: 'all',
+                  ta: 'left',
+                  display: 'inline-block',
+                  color: '$layer2',
+                  '@xs': {
+                    fs: '$space$8',
+                  },
+                  '@sm': {
+                    fs: '$space$9',
+                  },
+                  '@md': {
+                    fs: '$space$10',
+                  },
+                  '@lg': {
+                    fs: '$space$10',
+                  },
+                }}
+              >
+                {user.name}
+              </Text>
+              {/* <Tooltip content={user.address}> */}
               <Text
                 h3
                 weight="bold"
@@ -168,11 +171,11 @@ export default function DataTable(props) {
                   color: '$titleColor',
                   wordWrap: 'break-word',
                   zIndex: '2147483647',
-                  overflow:'visible',
+                  overflow: 'visible',
                   '@xs': {
                     fs: '$space$8',
                     '&:hover': {
-                      animation: `${xsScaleUp} 1s forwards`
+                      animation: `${xsScaleUp} 1s forwards`,
                     },
                   },
                   '@sm': {
@@ -191,8 +194,8 @@ export default function DataTable(props) {
               >
                 {user.address}
               </Text>
-            {/* </Tooltip> */}
-          </User>
+              {/* </Tooltip> */}
+            </User>
           </>
         )
       case 'status':
@@ -201,11 +204,9 @@ export default function DataTable(props) {
       case 'link':
         return (
           <Row justify="center" align="center">
-            <Col css={{ d: 'flex' }}>
+            <Col span={12} css={{ d: 'flex' }}>
               <Tooltip content="查看etherscan">
-                <IconButton
-                  onClick={() => onClickEtherscanLink(user.address)}
-                >
+                <IconButton onClick={() => onClickEtherscanLink(user.address)}>
                   <AiOutlineLink size={20} fill="#979797" />
                 </IconButton>
               </Tooltip>
@@ -253,7 +254,30 @@ export default function DataTable(props) {
               // align={column.uid === 'actions' ? 'center' : 'start'}
               align={column.uid === 'actions' ? 'center' : 'start'}
             >
-              {column.name}
+              <Text
+                h3
+                weight="bold"
+                css={{
+                  us: 'all',
+                  ta: 'left',
+                  display: 'inline-block',
+                  color: '$layer2',
+                  '@xs': {
+                    fs: '$space$8',
+                  },
+                  '@sm': {
+                    fs: '$space$9',
+                  },
+                  '@md': {
+                    fs: '$space$10',
+                  },
+                  '@lg': {
+                    fs: '$space$10',
+                  },
+                }}
+              >
+                {column.name}
+              </Text>
             </Table.Column>
           )}
         </Table.Header>

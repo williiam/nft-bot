@@ -10,7 +10,7 @@ import { DataToSign } from './types'
 export type postBody = {
   address: string
   user?: string
-  nikename?: string
+  nickname?: string
   whaleAddress?: string
   network?: string 
 
@@ -27,7 +27,8 @@ const ApiPost = async (url: string, data: DataToSign, signer: any) => {
   try {
     // const adress = await signer.getAddress();
     const signature: string = await signer.signMessage( JSON.stringify(data))
-    // TODO: 若使用者選擇不簽署，則顯示簽署失敗並且不執行AJAX
+
+    // TODO: 若連續2次簽署，則除了最後一個皆取消
 
     const response = await axiosObject({
       method: 'post',
