@@ -134,7 +134,7 @@ export default function DataTable(props) {
       name: wallet?.name? wallet?.name:"",
       status: 'active',
       avatar:
-        'https://img.freepik.com/free-vector/cute-whale-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3706.jpg?w=2000',
+      'https://play-lh.googleusercontent.com/7aPjIqSxe5mNlbHdlxhXNRd3FxqoX4zR8EdwQr0XR3uxWyWiUSMTTwx1VlE36OZAksk',
     }
   })
   const renderCell = (user, columnKey) => {

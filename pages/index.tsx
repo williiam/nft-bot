@@ -12,6 +12,7 @@ import {
   Button,
   Link as LinkContainer,
   Spacer,
+  keyframes,
 } from '@nextui-org/react'
 import { darkTheme } from '../shared/theme/darkTheme'
 import { styled } from '@stitches/react'
@@ -20,8 +21,20 @@ import { styled } from '@stitches/react'
 import { useTheme as useNextTheme } from 'next-themes'
 import { useTheme } from '@nextui-org/react'
 
-// Stitches
-import { keyframes } from '@stitches/react'
+
+const xsScaleUp = keyframes({
+  '0%': { transform: 'translateX(0%) scale(1)', left: 0, zIndex: '99999' },
+  '50%': { transform: 'translateX(0%) scale(1.2) ', left: 0, zIndex: '99999' ,
+  textGradient: '45deg, $yellow600 -20%, $red600 100%',
+
+},
+  '100%': {
+    transform: 'translateX(0%) scale(1.5) rotateY(360deg)',
+    textGradient: '45deg, $yellow600 -20%, $red600 100%',
+    zIndex: '99999',
+    cursor: 'pointer'
+  },
+})
 
 const fadeIn = keyframes({
   '0%': { opacity: '0' },
@@ -107,6 +120,9 @@ const LoginPanel: React.FC = () => {
           css={{
             fs:'$space$17',
             textGradient: '45deg, $yellow600 -20%, $red600 100%',
+            '&:hover': {
+              animation: `${xsScaleUp} 1s forwards`,
+            },
           }}
           weight="bold"
         >

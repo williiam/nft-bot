@@ -97,7 +97,7 @@ const AddModal = (props) => {
                   textGradient: '45deg, $yellow600 -20%, $red600 100%',
                 }}
               >
-                大戶
+                錢包
               </Text>
             </Text>
           </Modal.Header>
@@ -108,8 +108,8 @@ const AddModal = (props) => {
               fullWidth
               color="primary"
               size="lg"
-              label="大戶暱稱"
-              placeholder="大戶暱稱"
+              label="錢包暱稱"
+              placeholder="錢包暱稱"
               aria-labelledby="add-modal-input-nickname"
               css={{
                 lineHeight: '$lg',
@@ -129,8 +129,8 @@ const AddModal = (props) => {
               fullWidth
               color="primary"
               size="lg"
-              label="大戶地址"
-              placeholder="大戶地址"
+              label="錢包地址"
+              placeholder="錢包地址"
               aria-labelledby="add-modal-input-walletAddress"
               required
               onChange={(event) => {
@@ -239,7 +239,7 @@ const DeleteModal = (props) => {
               textGradient: '45deg, $yellow600 -20%, $red600 100%',
             }}
           >
-            確認取消追蹤大戶
+            確認取消追蹤錢包
           </Text>
         </Modal.Header>
         <Modal.Body>
