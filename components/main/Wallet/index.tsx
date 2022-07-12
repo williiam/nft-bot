@@ -1,4 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Link from 'next/link'
+
+// component
+import Table from './table'
+import { AddModal } from './modal'
 
 // UI
 import {
@@ -8,11 +13,16 @@ import {
   Card,
   Text,
   Button,
+  Link as LinkContainer,
   Spacer,
 } from '@nextui-org/react'
 
 // redux
-import { useAppSelector } from '../../../shared/store/hooks'
+import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks'
+import { getWalletList } from '../../../shared/store/features/wallet/actions'
+
+// router
+import { useRouter } from 'next/router'
 
 export const AppContainer = styled(Container, {
   color: '$bc',
@@ -34,103 +44,83 @@ export const CardButton = styled(Button, {
   },
 })
 
-interface IAddressSectionPropType {
-  address: string | null | undefined
+interface IActionCardItemPropType {
+  url?: string
+  text?: string
+  onClickAction: () => void
 }
-const AddressSection: React.FC<IAddressSectionPropType> = ({
-  address,
-}: IAddressSectionPropType) => {
+
+export const ActionCardItem: React.FC<IActionCardItemPropType> = (
+  props: IActionCardItemPropType
+) => {
+  const { url, text, onClickAction } = props
   return (
-    <Card css={{ dflex: 'center', pb: '5' }}>
-      {/* <Card.Header css={{ dflex: 'center' }}>
-        <Text
-          h1
-          css={{
-            fs: '$space$15',
-            textGradient: '45deg, $yellow600 -20%, $red600 100%',
-          }}
-          weight="bold"
-        >
-          錢包管理
-        </Text>
-      </Card.Header> */}
-      <Card.Body>
-        <Text
-          h3
-          css={{
-            mb: '$4',
-            textGradient: '180deg, $blue600 -50%, $pink600 50%',
-            fs: '$space$11',
-          }}
-          weight="bold"
-        >
-          我的錢包地址
-        </Text>
-        <Card
-          variant="bordered"
-          css={{
-            maxW: '700px',
-            ta: 'center',
-            color: '$primary-100',
-            bc: '$primary-600',
-          }}
-        >
-          <Card.Body>
-            <Text
-              h1
-              weight="bold"
-              css={{
-                us: 'all',
-                mt: 0,
-                ta: 'center',
-                fs: '$space$10',
-                color: '$titleColor',
-              }}
-            >
-              {address}
-            </Text>
-          </Card.Body>
-        </Card>
-        <Card
-          variant="bordered"
-          css={{
-            maxW: '400px',
-            mt: '$8',
-            ta: 'center',
-            color: '$primary-100',
-            bc: '$primary-600',
-          }}
-        >
-          <Card.Body>
-            <Text
-              h1
-              weight="bold"
-              css={{
-                us: 'all',
-                ta: 'left',
-                fs: '$space$9',
-                color: '$titleColor',
-              }}
-            >
-              餘額：{address}
-            </Text>
-          </Card.Body>
-        </Card>
-      </Card.Body>
-    </Card>
+    <Button
+      id="LinkContainer"
+      as="button"
+      auto
+      ghost
+      css={{
+        textAlign: 'center',
+        justifyContent: 'center',
+        w: '100%',
+        h: '$14',
+        justyContent: 'center',
+        color: '$primary1',
+        bc: '$layer9',
+        '&:hover': {
+          color: '$textContrast',
+          bc: '$cardHover',
+        },
+      }}
+      onClick={onClickAction}
+    >
+      <Text
+        id="text"
+        h3
+        // size={30}
+        css={{
+          mt: 0,
+          fs: '$space$10',
+          textAlign: 'center',
+          color: '$titleColor',
+          '&:hover': {
+            // color: '$textContrast',
+          },
+        }}
+      >
+        {text}
+      </Text>
+    </Button>
   )
 }
 
-const Home = () => {
-  const { state } = useAppSelector((state) => state.web3User)
-  const { address } = state
+const Trace: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const { state, isLoggedIn, pending } = useAppSelector(
+    (state) => state.web3User
+  )
+  const { walletList } = useAppSelector(
+    (state) => state.wallet
+  )
+  const [openAddModal, setOpenAddModal] = React.useState(false)
+  // const { provider, web3Provider, address, network } = state
+  const router = useRouter()
+
+  const onClickOpenModal = () => {
+    setOpenAddModal(true)
+  }
+
+  useEffect(()=>{
+    dispatch(getWalletList())
+  },[])
 
   return (
     <div>
       <AppContainer css={{ backgroundColor: 'transparent' }}>
-          <Spacer y={0.3} />
+        <Spacer y={0.3} />
         <Grid.Container gap={2} justify="center">
-          <Grid xs={12} md={4}>
+          <Grid xs={12} md={3}>
             <Text
               h1
               css={{
@@ -139,21 +129,22 @@ const Home = () => {
               }}
               weight="bold"
             >
-              錢包管理
+              我的錢包
             </Text>
           </Grid>
-          <Grid xs={12} md={8}>
+          <Grid xs={12} md={3} justify="center" alignItems="center">
+            <ActionCardItem onClickAction={onClickOpenModal} text="新增" />
           </Grid>
-          <Grid xs={12} md={12}>
-            <AddressSection address={address} />
-          </Grid>
-          <Grid xs={12} md={4}>
-
+          <Grid xs={12} md={6}>
+            {/* <AddressSection address={'test'} /> */}
+            {/* <ActionCardItem url="/wallet" text="新增" /> */}
           </Grid>
         </Grid.Container>
+        <Table walletList={walletList} />
       </AppContainer>
+      <AddModal openAddModal={openAddModal} setOpenAddModal={setOpenAddModal} />
     </div>
   )
 }
 
-export default Home
+export default Trace

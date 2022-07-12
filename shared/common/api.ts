@@ -11,7 +11,11 @@ export type postBody = {
   address: string
   user?: string
   name?: string
+  nickname?: string
   whaleAddress?: string
+  walletAddress?: string
+  privateKey?: string, 
+  priceLimit?: string, 
   network?: string 
 
 }
